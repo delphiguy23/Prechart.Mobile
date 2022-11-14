@@ -1,0 +1,4 @@
+#Mon Nov 14 14:58:18 PST 2022
+base.0=/Volumes/KingstonSSD/Working Directory/TestProjects/PrechartMobile/build/app/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+renamed.0=classes.dex
+path.0=classes.dex
