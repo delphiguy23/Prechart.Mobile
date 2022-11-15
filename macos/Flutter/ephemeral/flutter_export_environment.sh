@@ -1,7 +1,7 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
 export "FLUTTER_ROOT=/Users/delphiguy/flutter"
-export "FLUTTER_APPLICATION_PATH=/Volumes/KingstonSSD/Working Directory/TestProjects/PrechartMobile"
+export "FLUTTER_APPLICATION_PATH=/Volumes/KingstonSSD/Working Directory/PrechartRepoMacMobile"
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
 export "FLUTTER_BUILD_DIR=build"
 export "FLUTTER_BUILD_NAME=1.0.0"

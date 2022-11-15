@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/Volumes/KingstonSSD/Working Directory/TestProjects/PrechartMobile/build/app/intermediates/incremental/mergeReleaseResources/merged.dir/values-night-v8/values-night-v8.xml",
+            "outputFile": "/Volumes/KingstonSSD/Working Directory/PrechartRepoMacMobile/build/app/intermediates/incremental/mergeReleaseResources/merged.dir/values-night-v8/values-night-v8.xml",
             "map": [
                 {
-                    "source": "/Volumes/KingstonSSD/Working Directory/TestProjects/PrechartMobile/android/app/src/main/res/values-night/styles.xml",
+                    "source": "/Volumes/KingstonSSD/Working Directory/PrechartRepoMacMobile/android/app/src/main/res/values-night/styles.xml",
                     "from": {
                         "startLines": "3,14",
                         "startColumns": "4,4",

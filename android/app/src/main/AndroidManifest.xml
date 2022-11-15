@@ -1,7 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="prechart.com.prechart_mobile">
+    <uses-permission android:name="android.permission.INTERNET" />
    <application
-        android:label="prechart_mobile"
+        android:label="prechart internal project"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

@@ -4,10 +4,10 @@
     minSdkVersion="16"
     targetSdkVersion="31"
     shrinking="true"
-    mergedManifest="/Volumes/KingstonSSD/Working Directory/TestProjects/PrechartMobile/build/app/intermediates/merged_manifest/release/AndroidManifest.xml"
-    manifestMergeReport="/Volumes/KingstonSSD/Working Directory/TestProjects/PrechartMobile/build/app/outputs/logs/manifest-merger-release-report.txt"
-    proguardFiles="/Volumes/KingstonSSD/Working Directory/TestProjects/PrechartMobile/build/app/intermediates/default_proguard_files/global/proguard-android.txt-7.1.2:/Users/delphiguy/flutter/packages/flutter_tools/gradle/flutter_proguard_rules.pro:proguard-rules.pro"
-    partialResultsDir="/Volumes/KingstonSSD/Working Directory/TestProjects/PrechartMobile/build/app/intermediates/lint_vital_partial_results/release/out">
+    mergedManifest="/Volumes/KingstonSSD/Working Directory/PrechartRepoMacMobile/build/app/intermediates/merged_manifest/release/AndroidManifest.xml"
+    manifestMergeReport="/Volumes/KingstonSSD/Working Directory/PrechartRepoMacMobile/build/app/outputs/logs/manifest-merger-release-report.txt"
+    proguardFiles="/Volumes/KingstonSSD/Working Directory/PrechartRepoMacMobile/build/app/intermediates/default_proguard_files/global/proguard-android.txt-7.1.2:/Users/delphiguy/flutter/packages/flutter_tools/gradle/flutter_proguard_rules.pro:proguard-rules.pro"
+    partialResultsDir="/Volumes/KingstonSSD/Working Directory/PrechartRepoMacMobile/build/app/intermediates/lint_vital_partial_results/release/out">
   <buildFeatures
       namespacing="REQUIRED"/>
   <sourceProviders>
@@ -30,9 +30,9 @@
         value="android.app.Application" />
   </manifestPlaceholders>
   <mainArtifact
-      classOutputs="/Volumes/KingstonSSD/Working Directory/TestProjects/PrechartMobile/build/app/intermediates/javac/release/classes:/Volumes/KingstonSSD/Working Directory/TestProjects/PrechartMobile/build/app/tmp/kotlin-classes/release:/Volumes/KingstonSSD/Working Directory/TestProjects/PrechartMobile/build/app/kotlinToolingMetadata:/Volumes/KingstonSSD/Working Directory/TestProjects/PrechartMobile/build/app/intermediates/compile_and_runtime_not_namespaced_r_class_jar/release/R.jar"
+      classOutputs="/Volumes/KingstonSSD/Working Directory/PrechartRepoMacMobile/build/app/intermediates/javac/release/classes:/Volumes/KingstonSSD/Working Directory/PrechartRepoMacMobile/build/app/tmp/kotlin-classes/release:/Volumes/KingstonSSD/Working Directory/PrechartRepoMacMobile/build/app/kotlinToolingMetadata:/Volumes/KingstonSSD/Working Directory/PrechartRepoMacMobile/build/app/intermediates/compile_and_runtime_not_namespaced_r_class_jar/release/R.jar"
       applicationId="prechart.com.prechart_mobile"
-      generatedSourceFolders="/Volumes/KingstonSSD/Working Directory/TestProjects/PrechartMobile/build/app/generated/ap_generated_sources/release/out:/Volumes/KingstonSSD/Working Directory/TestProjects/PrechartMobile/build/app/generated/aidl_source_output_dir/release/out:/Volumes/KingstonSSD/Working Directory/TestProjects/PrechartMobile/build/app/generated/source/buildConfig/release:/Volumes/KingstonSSD/Working Directory/TestProjects/PrechartMobile/build/app/generated/renderscript_source_output_dir/release/out"
-      generatedResourceFolders="/Volumes/KingstonSSD/Working Directory/TestProjects/PrechartMobile/build/app/generated/res/rs/release:/Volumes/KingstonSSD/Working Directory/TestProjects/PrechartMobile/build/app/generated/res/resValues/release">
+      generatedSourceFolders="/Volumes/KingstonSSD/Working Directory/PrechartRepoMacMobile/build/app/generated/ap_generated_sources/release/out:/Volumes/KingstonSSD/Working Directory/PrechartRepoMacMobile/build/app/generated/aidl_source_output_dir/release/out:/Volumes/KingstonSSD/Working Directory/PrechartRepoMacMobile/build/app/generated/source/buildConfig/release:/Volumes/KingstonSSD/Working Directory/PrechartRepoMacMobile/build/app/generated/renderscript_source_output_dir/release/out"
+      generatedResourceFolders="/Volumes/KingstonSSD/Working Directory/PrechartRepoMacMobile/build/app/generated/res/rs/release:/Volumes/KingstonSSD/Working Directory/PrechartRepoMacMobile/build/app/generated/res/resValues/release">
   </mainArtifact>
 </variant>
