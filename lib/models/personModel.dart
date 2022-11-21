@@ -136,7 +136,7 @@ class TaxPaymentDetail {
     this.werknemersgegevens,
   });
 
-  TaxNo? taxNo;
+  String? taxNo;
   String? numIv;
   String? personNr;
   DateTime? taxFileProcessDate;
@@ -146,7 +146,7 @@ class TaxPaymentDetail {
   Werknemersgegevens? werknemersgegevens;
 
   factory TaxPaymentDetail.fromJson(Map<String, dynamic> json) => TaxPaymentDetail(
-    taxNo: taxNoValues.map[json["taxNo"]],
+    taxNo: json["taxNo"], // taxNoValues.map[json["taxNo"]],
     numIv: json["numIv"],
     personNr: json["personNr"],
     taxFileProcessDate: DateTime.parse(json["taxFileProcessDate"]),
@@ -157,7 +157,7 @@ class TaxPaymentDetail {
   );
 
   Map<String, dynamic> toJson() => {
-    "taxNo": taxNoValues.reverse[taxNo],
+    "taxNo": taxNo, // taxNoValues.reverse[taxNo],
     "numIv": numIv,
     "personNr": personNr,
     "taxFileProcessDate": taxFileProcessDate?.toIso8601String(),
@@ -506,16 +506,16 @@ class PersonWerkgever {
   });
 
   String? klant;
-  TaxNo? loonheffingsNr;
+  String? loonheffingsNr;
 
   factory PersonWerkgever.fromJson(Map<String, dynamic> json) => PersonWerkgever(
     klant: json["klant"],
-    loonheffingsNr: taxNoValues.map[json["loonheffingsNr"]],
+    loonheffingsNr: json["loonheffingsNr"],
   );
 
   Map<String, dynamic> toJson() => {
     "klant": klant,
-    "loonheffingsNr": taxNoValues.reverse[loonheffingsNr],
+    "loonheffingsNr": loonheffingsNr, // taxNoValues.reverse[loonheffingsNr],
   };
 }
 

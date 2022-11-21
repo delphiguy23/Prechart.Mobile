@@ -1,4 +1,4 @@
-#Tue Nov 15 08:32:16 PST 2022
+#Fri Nov 18 13:32:03 PST 2022
 base.0=/Volumes/KingstonSSD/Working Directory/PrechartRepoMacMobile/build/app/intermediates/dex/release/minifyReleaseWithR8/classes.dex
 renamed.0=classes.dex
 path.0=classes.dex

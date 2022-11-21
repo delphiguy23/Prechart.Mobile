@@ -1,0 +1,6 @@
+/.dart_tool
+build/
+buid/app/
+/android/.gradlebuild/
+build/app/intermediates/*.*
+/android/.gradle/
