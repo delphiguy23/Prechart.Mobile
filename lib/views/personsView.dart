@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:prechart_mobile/endpoints/endpoints.dart';
 import 'package:prechart_mobile/models/personModel.dart';
 import 'package:prechart_mobile/providers/navigation_provider.dart';
+import 'package:prechart_mobile/providers/user_token_provider.dart';
 import 'package:prechart_mobile/views/navigation.dart';
 import 'package:prechart_mobile/providers/persons_provider.dart';
 import 'package:prechart_mobile/views/personDetailedView.dart';
@@ -30,8 +31,10 @@ class _PersonsViewState extends State<PersonsView> {
   }
 
   getPersons() async {
+    var tokens = context.read<UserTokens>().user;
+
     if (context.read<PersonsLists>().persons.isEmpty) {
-      persons = await Endpoints().getEmployeePersons();
+      persons = await Endpoints().getEmployeePersons(tokens);
 
       context.read<PersonsLists>().clearPersons();
 

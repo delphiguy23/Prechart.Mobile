@@ -7,8 +7,11 @@ class WerkgeversLists with ChangeNotifier{
 
   List<Werkgever> get werkgevers => _werkgevers;
 
-  void setWerkgevers(List<Werkgever> werkgevers){
-    _werkgevers = werkgevers;
+  void setWerkgevers(List<Werkgever>? werkgevers){
+    if (werkgevers != null && werkgevers.isNotEmpty) {
+      _werkgevers = werkgevers;
+    }
+
     notifyListeners();
   }
 

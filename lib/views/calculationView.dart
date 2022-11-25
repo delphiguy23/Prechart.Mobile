@@ -1,22 +1,28 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 import 'package:prechart_mobile/views/navigation.dart';
+import 'package:prechart_mobile/widgets/calculationParameters.dart';
 
-class CalculationView extends StatelessWidget {
+
+class CalculationView extends StatefulWidget {
   static const routeName = '/calculation';
 
   const CalculationView({Key? key}) : super(key: key);
 
   @override
+  State<CalculationView> createState() => _CalculationViewState();
+}
+
+class _CalculationViewState extends State<CalculationView> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: Navigation(),
-      appBar: AppBar(
-        title: const Text('Calculation'),
-      ),
-      body: Center(
-          child: Lottie.asset('assets/animations/under-construction-1.json', repeat: true, reverse: true, animate: true)),
-    );
+        bottomNavigationBar: const Navigation(),
+        appBar: AppBar(
+          title: const Text('Calculation'),
+        ),
+        body: Center(
+          child: CalculationParameters(),
+        ));
   }
 }

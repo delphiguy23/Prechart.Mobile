@@ -108,6 +108,7 @@
 /Users/delphiguy/flutter/.pub-cache/hosted/pub.dartlang.org/fake_async-1.3.1/LICENSE
 /Users/delphiguy/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_launcher_icons-0.10.0/LICENSE
 /Users/delphiguy/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_lints-2.0.1/LICENSE
+/Users/delphiguy/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_switch-0.3.2/LICENSE
 /Users/delphiguy/flutter/.pub-cache/hosted/pub.dartlang.org/http-0.13.5/LICENSE
 /Users/delphiguy/flutter/.pub-cache/hosted/pub.dartlang.org/http-0.13.5/lib/http.dart
 /Users/delphiguy/flutter/.pub-cache/hosted/pub.dartlang.org/http-0.13.5/lib/src/base_client.dart
@@ -1187,8 +1188,11 @@
 /Volumes/KingstonSSD/Working Directory/PrechartRepoMacMobile/lib/main.dart
 /Volumes/KingstonSSD/Working Directory/PrechartRepoMacMobile/lib/models/personCumulatiefModel.dart
 /Volumes/KingstonSSD/Working Directory/PrechartRepoMacMobile/lib/models/personModel.dart
+/Volumes/KingstonSSD/Working Directory/PrechartRepoMacMobile/lib/models/taxYearModel.dart
 /Volumes/KingstonSSD/Working Directory/PrechartRepoMacMobile/lib/models/tokensModel.dart
+/Volumes/KingstonSSD/Working Directory/PrechartRepoMacMobile/lib/models/userModel.dart
 /Volumes/KingstonSSD/Working Directory/PrechartRepoMacMobile/lib/models/werkgeverModel.dart
+/Volumes/KingstonSSD/Working Directory/PrechartRepoMacMobile/lib/models/woonlandModel.dart
 /Volumes/KingstonSSD/Working Directory/PrechartRepoMacMobile/lib/providers/navigation_provider.dart
 /Volumes/KingstonSSD/Working Directory/PrechartRepoMacMobile/lib/providers/persons_cumulatief_provider.dart
 /Volumes/KingstonSSD/Working Directory/PrechartRepoMacMobile/lib/providers/persons_provider.dart
@@ -1213,4 +1217,5 @@
 /Volumes/KingstonSSD/Working Directory/PrechartRepoMacMobile/lib/views/tabs/werkgever/werkgeverWhk.dart
 /Volumes/KingstonSSD/Working Directory/PrechartRepoMacMobile/lib/views/werkgeverDetailedView.dart
 /Volumes/KingstonSSD/Working Directory/PrechartRepoMacMobile/lib/views/werkgeverView.dart
+/Volumes/KingstonSSD/Working Directory/PrechartRepoMacMobile/lib/widgets/calculationParameters.dart
 /Volumes/KingstonSSD/Working Directory/PrechartRepoMacMobile/pubspec.yaml

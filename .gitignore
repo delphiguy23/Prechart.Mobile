@@ -4,3 +4,6 @@ buid/app/
 /android/.gradlebuild/
 build/app/intermediates/*.*
 /android/.gradle/
+.idea/
+.vs/
+.dart_tool/

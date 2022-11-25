@@ -10,7 +10,6 @@ class Navigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return CurvedNavigationBar(
       color: Colors.blue,
       backgroundColor: Colors.white,
@@ -26,18 +25,23 @@ class Navigation extends StatelessWidget {
       ],
       index: context.watch<NavigationIndex>().index,
       onTap: (_index) async {
+        var previousIndex = context.read<NavigationIndex>().index;
         context.read<NavigationIndex>().setIndex(_index);
 
+        print('index: $_index,  previousIndex: $previousIndex');
+
         if (_index == 0) {
-            Navigator.of(context).pushNamedAndRemoveUntil('/persons', (route) => false);
+          Navigator.of(context).pushNamedAndRemoveUntil('/persons', (route) => false);
         } else if (_index == 1) {
-          Navigator.of(context).pushNamedAndRemoveUntil('/calculation', (route) => false);
+          if (previousIndex != 1){
+            Navigator.of(context).pushNamedAndRemoveUntil('/calculation', (route) => false);
+          }
         } else if (_index == 2) {
           Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
         } else if (_index == 3) {
-            Navigator.of(context).pushNamedAndRemoveUntil('/werkgever', (route) => false);
+          Navigator.of(context).pushNamedAndRemoveUntil('/werkgever', (route) => false);
         } else if (_index == 4) {
-            Navigator.of(context).pushNamedAndRemoveUntil('/logoff', (route) => false);
+          Navigator.of(context).pushNamedAndRemoveUntil('/logoff', (route) => false);
         }
       },
     );

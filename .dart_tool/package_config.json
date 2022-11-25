@@ -20,6 +20,18 @@
       "languageVersion": "2.14"
     },
     {
+      "name": "base58check",
+      "rootUri": "file:///Users/delphiguy/flutter/.pub-cache/hosted/pub.dartlang.org/base58check-2.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "bech32",
+      "rootUri": "file:///Users/delphiguy/flutter/.pub-cache/hosted/pub.dartlang.org/bech32-0.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "boolean_selector",
       "rootUri": "file:///Users/delphiguy/flutter/.pub-cache/hosted/pub.dartlang.org/boolean_selector-2.1.0",
       "packageUri": "lib/",
@@ -57,9 +69,9 @@
     },
     {
       "name": "convert",
-      "rootUri": "file:///Users/delphiguy/flutter/.pub-cache/hosted/pub.dartlang.org/convert-3.1.1",
+      "rootUri": "file:///Users/delphiguy/flutter/.pub-cache/hosted/pub.dartlang.org/convert-3.0.2",
       "packageUri": "lib/",
-      "languageVersion": "2.18"
+      "languageVersion": "2.12"
     },
     {
       "name": "crypto",
@@ -104,10 +116,28 @@
       "languageVersion": "2.17"
     },
     {
+      "name": "flutter_multi_formatter",
+      "rootUri": "file:///Users/delphiguy/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_multi_formatter-2.9.7",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "flutter_switch",
+      "rootUri": "file:///Users/delphiguy/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_switch-0.3.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "flutter_test",
       "rootUri": "file:///Users/delphiguy/flutter/packages/flutter_test",
       "packageUri": "lib/",
       "languageVersion": "2.17"
+    },
+    {
+      "name": "font_awesome_flutter",
+      "rootUri": "file:///Users/delphiguy/flutter/.pub-cache/hosted/pub.dartlang.org/font_awesome_flutter-10.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
     },
     {
       "name": "http",
@@ -144,6 +174,12 @@
       "rootUri": "file:///Users/delphiguy/flutter/.pub-cache/hosted/pub.dartlang.org/json_annotation-4.7.0",
       "packageUri": "lib/",
       "languageVersion": "2.17"
+    },
+    {
+      "name": "jwt_decode",
+      "rootUri": "file:///Users/delphiguy/flutter/.pub-cache/hosted/pub.dartlang.org/jwt_decode-0.3.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
     },
     {
       "name": "lints",
@@ -242,6 +278,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "switcher",
+      "rootUri": "file:///Users/delphiguy/flutter/.pub-cache/hosted/pub.dartlang.org/switcher-1.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "term_glyph",
       "rootUri": "file:///Users/delphiguy/flutter/.pub-cache/hosted/pub.dartlang.org/term_glyph-1.2.1",
       "packageUri": "lib/",
@@ -250,6 +292,12 @@
     {
       "name": "test_api",
       "rootUri": "file:///Users/delphiguy/flutter/.pub-cache/hosted/pub.dartlang.org/test_api-0.4.12",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "toggle_switch",
+      "rootUri": "file:///Users/delphiguy/flutter/.pub-cache/hosted/pub.dartlang.org/toggle_switch-2.0.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -284,7 +332,7 @@
       "languageVersion": "2.18"
     }
   ],
-  "generated": "2022-11-18T04:58:05.124447Z",
+  "generated": "2022-11-25T05:06:27.241443Z",
   "generator": "pub",
   "generatorVersion": "2.18.4"
 }

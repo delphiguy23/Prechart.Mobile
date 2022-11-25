@@ -1,18 +1,20 @@
+import 'package:prechart_mobile/providers/calculation_current_page_provider.dart';
 import 'package:prechart_mobile/providers/navigation_provider.dart';
 import 'package:prechart_mobile/providers/persons_cumulatief_provider.dart';
 import 'package:prechart_mobile/providers/persons_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:prechart_mobile/providers/taxJaar_provider.dart';
+import 'package:prechart_mobile/providers/user_token_provider.dart';
 import 'package:prechart_mobile/providers/werkgever_provider.dart';
+import 'package:prechart_mobile/views/calculationDetailedView.dart';
 import 'package:prechart_mobile/views/calculationView.dart';
 import 'package:prechart_mobile/views/homeView.dart';
-import 'package:prechart_mobile/views/landingView.dart';
 import 'package:prechart_mobile/views/logOffView.dart';
+import 'package:prechart_mobile/views/loginView.dart';
 import 'package:prechart_mobile/views/personDetailedView.dart';
 import 'package:prechart_mobile/views/personsView.dart';
 import 'package:prechart_mobile/views/werkgeverView.dart';
 import 'package:provider/provider.dart';
-
-import 'views/navigation.dart';
 
 void main() {
   runApp(MultiProvider(
@@ -21,6 +23,9 @@ void main() {
       ChangeNotifierProvider(create: (context) => WerkgeversLists()),
       ChangeNotifierProvider(create: (context) => PersonsLists()),
       ChangeNotifierProvider(create: (context) => PersonsCumulatiefLists()),
+      ChangeNotifierProvider(create: (context) => TaxJaarLists()),
+      ChangeNotifierProvider(create: (context) => UserTokens()),
+      ChangeNotifierProvider(create: (context) => CalculationCurrentPage()),
     ],
     child: MyApp(),
   ));
@@ -43,9 +48,10 @@ class MyApp extends StatelessWidget {
         PersonsView.routeName: (context) => PersonsView(),
         WerkgeverView.routeName: (context) => WerkgeverView(),
         PersonDetailedView.routeName: (context) => PersonDetailedView(null),
-        LogOffView.routeName: (context) => LogOffView(),
-        CalculationView.routeName: (context) => CalculationView(),
-        HomeView.routeName: (context) => HomeView(),
+        LogOffView.routeName: (context) => const LogOffView(),
+        CalculationView.routeName: (context) => const CalculationView(),
+        CalculationDetails.routeName: (context) =>  CalculationDetails(),
+        HomeView.routeName: (context) => const HomeView(),
       },
     );
   }
@@ -66,9 +72,9 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        bottomNavigationBar: Navigation(),
+        // bottomNavigationBar: Navigation(),
         body: Container(
-          child: LandingView(),
+          child: LoginView(),
         )
     );
   }

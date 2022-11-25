@@ -4,6 +4,7 @@ import 'package:prechart_mobile/endpoints/endpoints.dart';
 import 'package:prechart_mobile/models/personModel.dart';
 import 'package:prechart_mobile/providers/navigation_provider.dart';
 import 'package:prechart_mobile/providers/persons_provider.dart';
+import 'package:prechart_mobile/providers/user_token_provider.dart';
 import 'package:prechart_mobile/views/personDetailedView.dart';
 import 'package:provider/provider.dart';
 
@@ -28,9 +29,10 @@ class _WerkgeverPersonsState extends State<WerkgeverPersons> {
 
   getPersons() async {
     persons = context.read<PersonsLists>().personsWerkgever(taxno: widget.fiscaalNummer);
+    var tokens = context.read<UserTokens>().user;
 
     if (persons == null || (persons?.isEmpty ?? true)) {
-      persons = await Endpoints().getEmployeePersons();
+      persons = await Endpoints().getEmployeePersons(tokens);
 
       if (persons != null && persons!.isNotEmpty) {
         context.read<PersonsLists>().setPersons(persons!);

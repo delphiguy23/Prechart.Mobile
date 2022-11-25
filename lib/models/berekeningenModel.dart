@@ -60,8 +60,8 @@ class BerekeningenModel {
   DateTime? processDatum;
   int? woonlandbeginselId;
   int? tijdvakId;
-  int? inkomenWit;
-  int? inkomenGroen;
+  double? inkomenWit;
+  double? inkomenGroen;
   Werkgever? werkgever;
   Inhouding? inhouding;
   Map<String, double>? premieBedrag;
@@ -71,25 +71,27 @@ class BerekeningenModel {
   DateTime? loonInVanaf;
   DateTime? loonInTot;
   int? algemeneHeffingskortingToegepast;
-  int? basisDagen;
+  double? basisDagen;
   double? inhoudingOpLoonWit;
-  int? inhoudingOpLoonGroen;
-  int? algemeneHeffingskortingBedrag;
-  int? verrekendeArbeIdskorting;
-  int? sociaalVerzekeringsloon;
+  double? inhoudingOpLoonGroen;
+  double? algemeneHeffingskortingBedrag;
+  double? verrekendeArbeIdskorting;
+  double? sociaalVerzekeringsloon;
   String? premieBedragAlgemeenWerkloosheIdsFondsLaagHoog;
-  int? premieBedragAlgemeenWerkloosheIdsFondsLaag;
+  double? premieBedragAlgemeenWerkloosheIdsFondsLaag;
   double? premieBedragAlgemeenWerkloosheIdsFondsHoog;
+  double? premieBedragDataAlgemeenWerkloosheIdsFondsLaag;
+  double? premieBedragDataAlgemeenWerkloosheIdsFondsHoog;
   bool? isPremieBedragUitvoeringsFondsvoordeOverheId;
-  int? premieBedragUitvoeringsFondsvoordeOverheId;
+  double? premieBedragUitvoeringsFondsvoordeOverheId;
   String? premieBedragWetArbeIdsOngeschikheIdLaagHoog;
-  int? premieBedragWetArbeIdsOngeschikheIdLaag;
+  double? premieBedragWetArbeIdsOngeschikheIdLaag;
   double? premieBedragWetArbeIdsOngeschikheIdHoog;
   double? premieBedragWetKinderopvang;
-  int? premieBedragZiektekostenVerzekeringsWetLoon;
+  double? premieBedragZiektekostenVerzekeringsWetLoon;
   String? payee;
   double? premieBedragZiektekostenVerzekeringsWetWerkgeversbijdrage;
-  int? premieBedragZiektekostenVerzekeringsWetWerknemersbijdrage;
+  double? premieBedragZiektekostenVerzekeringsWetWerknemersbijdrage;
   double? werkgeverWhkPremieBedragWgaVastWerkgever;
   double? werkgeverWhkPremieBedragWgaVastWerknemer;
   double? werkgeverWhkPremieBedragFlexWerkgever;
@@ -124,7 +126,7 @@ class BerekeningenModel {
     verrekendeArbeIdskorting: json["verrekendeArbeIdskorting"],
     sociaalVerzekeringsloon: json["sociaalVerzekeringsloon"],
     premieBedragAlgemeenWerkloosheIdsFondsLaagHoog: json["premieBedragAlgemeenWerkloosheIdsFondsLaagHoog"],
-    premieBedragAlgemeenWerkloosheIdsFondsLaag: json["premieBedragAlgemeenWerkloosheIdsFondsLaag"],
+    premieBedragAlgemeenWerkloosheIdsFondsLaag: json["premieBedragAlgemeenWerkloosheIdsFondsLaag"].toDouble(),
     premieBedragAlgemeenWerkloosheIdsFondsHoog: json["premieBedragAlgemeenWerkloosheIdsFondsHoog"].toDouble(),
     isPremieBedragUitvoeringsFondsvoordeOverheId: json["isPremieBedragUitvoeringsFondsvoordeOverheId"],
     premieBedragUitvoeringsFondsvoordeOverheId: json["premieBedragUitvoeringsFondsvoordeOverheId"],
@@ -212,11 +214,11 @@ class Inhouding {
   });
 
   double? inhoudingWit;
-  int? inhoudingGroen;
-  int? basisDagen;
-  int? algemeneHeffingsKorting;
+  double? inhoudingGroen;
+  double? basisDagen;
+  double? algemeneHeffingsKorting;
   bool? algemeneHeffingsKortingIndicator;
-  int? arbeidsKorting;
+  double? arbeidsKorting;
   int? loontijdvak;
   int? woonlandbeginselId;
   String? inhoudingType;
@@ -362,35 +364,35 @@ class Collectieve {
   String? periode;
   DateTime? processedDate;
   String? collectieveType;
-  int? totLnLbPh;
-  int? totLnSv;
-  int? totPrlnAofAnwLg;
-  int? totPrlnAofAnwHg;
-  int? totPrlnAofAnwUit;
-  int? totPrlnAwfAnwLg;
-  int? totPrlnAwfAnwHg;
-  int? totPrlnAwfAnwHz;
-  int? prLnUfo;
-  int? ingLbPh;
-  int? ehPubUitk;
-  int? ehGebrAuto;
-  int? ehVut;
-  int? ehOvsFrfWrkkstrg;
-  int? avZeev;
-  int? vrlAvso;
-  int? totPrAofLg;
-  int? totPrAofHg;
-  int? totPrAofUit;
-  int? totOpslWko;
-  int? totPrGediffWhk;
-  int? totPrAwfLg;
-  int? totPrAwfHg;
-  int? totPrAwfHz;
-  int? prUfo;
-  int? ingBijdrZvw;
-  int? totWghZvw;
-  int? totTeBet;
-  int? totGen;
+  double? totLnLbPh;
+  double? totLnSv;
+  double? totPrlnAofAnwLg;
+  double? totPrlnAofAnwHg;
+  double? totPrlnAofAnwUit;
+  double? totPrlnAwfAnwLg;
+  double? totPrlnAwfAnwHg;
+  double? totPrlnAwfAnwHz;
+  double? prLnUfo;
+  double? ingLbPh;
+  double? ehPubUitk;
+  double? ehGebrAuto;
+  double? ehVut;
+  double? ehOvsFrfWrkkstrg;
+  double? avZeev;
+  double? vrlAvso;
+  double? totPrAofLg;
+  double? totPrAofHg;
+  double? totPrAofUit;
+  double? totOpslWko;
+  double? totPrGediffWhk;
+  double? totPrAwfLg;
+  double? totPrAwfHg;
+  double? totPrAwfHz;
+  double? prUfo;
+  double? ingBijdrZvw;
+  double? totWghZvw;
+  double? totTeBet;
+  double? totGen;
   List<SaldoCorrectiesVoorgaandTijdvak>? saldoCorrectiesVoorgaandTijdvak;
 
   factory Collectieve.fromJson(Map<String, dynamic> json) => Collectieve(
@@ -477,7 +479,7 @@ class SaldoCorrectiesVoorgaandTijdvak {
 
   DateTime? datAanvTv;
   DateTime? datEindTv;
-  int? saldo;
+  double? saldo;
 
   factory SaldoCorrectiesVoorgaandTijdvak.fromJson(Map<String, dynamic> json) => SaldoCorrectiesVoorgaandTijdvak(
     datAanvTv: DateTime.parse(json["datAanvTv"]),
@@ -530,12 +532,12 @@ class WhkPremy {
   });
 
   String? id;
-  int? wgaVastWerkgever;
-  int? wgaVastWerknemer;
-  int? flexWerkgever;
-  int? flexWerknemer;
-  int? zwFlex;
-  int? totaal;
+  double? wgaVastWerkgever;
+  double? wgaVastWerknemer;
+  double? flexWerkgever;
+  double? flexWerknemer;
+  double? zwFlex;
+  double? totaal;
   DateTime? actiefVanaf;
   DateTime? actiefTot;
   DateTime? dateCreated;

@@ -4,6 +4,7 @@ import 'package:prechart_mobile/endpoints/endpoints.dart';
 import 'package:prechart_mobile/models/personModel.dart';
 import 'package:prechart_mobile/models/personCumulatiefModel.dart';
 import 'package:prechart_mobile/providers/persons_cumulatief_provider.dart';
+import 'package:prechart_mobile/providers/user_token_provider.dart';
 import 'package:provider/provider.dart';
 
 class PersonCumulatieve extends StatefulWidget {
@@ -34,13 +35,15 @@ class _PersonCumulatieveState extends State<PersonCumulatieve> {
   }
 
   getCumulatiefs() async {
+    var tokens = context.read<UserTokens>().user;
+
     personCumulatieve = context
         .read<PersonsCumulatiefLists>()
         .person(bsn: widget.person.sofiNr ?? '');
 
     if (personCumulatieve == null) {
       personCumulatieve =
-          await Endpoints().getPersonCumulatief(widget.person.sofiNr ?? '');
+          await Endpoints().getPersonCumulatief(widget.person.sofiNr ?? '', tokens);
 
       if (personCumulatieve != null) {
         context
