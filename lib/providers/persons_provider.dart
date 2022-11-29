@@ -34,13 +34,7 @@ class PersonsLists with ChangeNotifier {
   }
 
   void clearPersons() {
-    try {
-      if (_persons.isEmpty) {
         _persons.clear();
-      }
       notifyListeners();
-    } catch (e) {
-      print(e);
-    }
   }
 }

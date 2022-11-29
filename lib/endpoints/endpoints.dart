@@ -54,6 +54,25 @@ class Endpoints {
     }
   }
 
+  Future<Tokens?> getRefreshTokens(UserModel tokens) async {
+    Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Accept': '*/*',
+    };
+
+    var response = await httpClient.post(
+      Uri.parse(userRefresh),
+      headers: headers,
+      body: userModelToJson(tokens),
+    );
+
+    if (response.statusCode == 200) {
+      var json = response.body;
+      return tokensFromJson(json);
+    }
+  }
+
+
   Future<List<Werkgever>?> getWerkgevers(UserModel tokens) async {
     bearerToken = tokens.bearerToken;
 
@@ -110,6 +129,7 @@ class Endpoints {
 
   Future<List<Person>?> getEmployeePersons(UserModel tokens) async {
     bearerToken=tokens.bearerToken;
+
     if (Jwt.isExpired(bearerToken ?? '')) {
       var tokens = await getTokens();
       bearerToken = tokens!.bearerToken;
@@ -241,6 +261,8 @@ class Endpoints {
         var json = response.body;
         return berekeningen.berekeningenModelFromJson(json);
       }
+
+      return null;
     }
   }
 }

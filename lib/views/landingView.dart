@@ -10,7 +10,6 @@ class LandingView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // bottomNavigationBar: Navigation(),
       appBar: AppBar(
         title: const Text('Home'),
       ),

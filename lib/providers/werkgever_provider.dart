@@ -15,7 +15,7 @@ class WerkgeversLists with ChangeNotifier{
     notifyListeners();
   }
 
-  void clearPersons(){
+  void clearWerkgevers(){
     _werkgevers.clear();
     notifyListeners();
   }

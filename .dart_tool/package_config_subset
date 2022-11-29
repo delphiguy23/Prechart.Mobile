@@ -54,6 +54,10 @@ cupertino_icons
 2.12
 file:///Users/delphiguy/flutter/.pub-cache/hosted/pub.dartlang.org/cupertino_icons-1.0.5/
 file:///Users/delphiguy/flutter/.pub-cache/hosted/pub.dartlang.org/cupertino_icons-1.0.5/lib/
+currency_text_input_formatter
+2.12
+file:///Users/delphiguy/flutter/.pub-cache/hosted/pub.dartlang.org/currency_text_input_formatter-2.1.8/
+file:///Users/delphiguy/flutter/.pub-cache/hosted/pub.dartlang.org/currency_text_input_formatter-2.1.8/lib/
 curved_navigation_bar
 2.12
 file:///Users/delphiguy/flutter/.pub-cache/hosted/pub.dartlang.org/curved_navigation_bar-1.0.3/
@@ -114,6 +118,10 @@ lints
 2.17
 file:///Users/delphiguy/flutter/.pub-cache/hosted/pub.dartlang.org/lints-2.0.1/
 file:///Users/delphiguy/flutter/.pub-cache/hosted/pub.dartlang.org/lints-2.0.1/lib/
+liquid_pull_to_refresh
+2.12
+file:///Users/delphiguy/flutter/.pub-cache/hosted/pub.dartlang.org/liquid_pull_to_refresh-3.0.1/
+file:///Users/delphiguy/flutter/.pub-cache/hosted/pub.dartlang.org/liquid_pull_to_refresh-3.0.1/lib/
 liquid_swipe
 2.12
 file:///Users/delphiguy/flutter/.pub-cache/hosted/pub.dartlang.org/liquid_swipe-3.0.0/

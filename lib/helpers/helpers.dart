@@ -6,6 +6,8 @@ var currencyFormat = NumberFormat.currency(locale: 'nl_NL', symbol: '€');
 
 const String userValidate = 'https://prd-zekerheyd-user.prechart.com/platform/service/api/users/validate';
 
+const String userRefresh = 'https://prd-zekerheyd-user.prechart.com/platform/service/api/users/refresh';
+
 const String werkgeversAll = 'https://prd-zekerheyd-werkgever.prechart.com/platform/service/api/werkgever/all';
 
 const String personsWergeverAll = 'https://prd-zekerheyd-person.prechart.com/platform/service/api/person/werkgever/';

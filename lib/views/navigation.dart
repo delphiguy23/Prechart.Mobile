@@ -28,8 +28,6 @@ class Navigation extends StatelessWidget {
         var previousIndex = context.read<NavigationIndex>().index;
         context.read<NavigationIndex>().setIndex(_index);
 
-        print('index: $_index,  previousIndex: $previousIndex');
-
         if (_index == 0) {
           Navigator.of(context).pushNamedAndRemoveUntil('/persons', (route) => false);
         } else if (_index == 1) {

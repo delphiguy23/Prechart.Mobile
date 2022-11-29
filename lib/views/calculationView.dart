@@ -18,9 +18,6 @@ class _CalculationViewState extends State<CalculationView> {
   Widget build(BuildContext context) {
     return Scaffold(
         bottomNavigationBar: const Navigation(),
-        appBar: AppBar(
-          title: const Text('Calculation'),
-        ),
         body: Center(
           child: CalculationParameters(),
         ));

@@ -83,7 +83,6 @@ class _MyHomePageState extends State<MyHomePage> {
 Widget LoadWidgetPage({required int index}) {
   Widget widget;
 
-  print('index---- ${index}');
   switch (index) {
     case 0:
       widget = PersonsView();

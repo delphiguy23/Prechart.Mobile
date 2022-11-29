@@ -1,3 +1,4 @@
+import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
@@ -129,88 +130,107 @@ class _CalculationParametersState extends State<CalculationParameters> {
     });
   }
 
-  void calculate() async {
-    InhoudingParameters inhoudingParameters = InhoudingParameters(
-      algemeneHeffingsKortingIndicator: _algemeneVoorwaarden,
-      woondlandBeginselId: _selectedWoonlandIndex!,
-      procesDatum: DateTime.parse(selectedProcessDate.text),
-      loontijdvak: _selectedLoonTijdvakIndex!,
-      inkomenWit: currencyFormat.parse(inputWhite.text.replaceAll(_currency, '')),
-      inkomenGroen: currencyFormat.parse(inputGreen.text.replaceAll(_currency, '')),
-      basisDagen: _selectedLoonTijdvakIndex == 1 ? int.parse(inputBasicDagen.text) : 1,
-      geboortedatum: DateTime.parse(selectedBirthDate.text),
-    );
+  Future<Map<String, dynamic>> calculate() async {
+    try {
+      InhoudingParameters inhoudingParameters = InhoudingParameters(
+        algemeneHeffingsKortingIndicator: _algemeneVoorwaarden,
+        woondlandBeginselId: _selectedWoonlandIndex!,
+        procesDatum: DateTime.parse(selectedProcessDate.text),
+        loontijdvak: _selectedLoonTijdvakIndex!,
+        inkomenWit: currencyFormat.parse(inputWhite.text.replaceAll(_currency, '')),
+        inkomenGroen: currencyFormat.parse(inputGreen.text.replaceAll(_currency, '')),
+        basisDagen: _selectedLoonTijdvakIndex == 1 ? int.parse(inputBasicDagen.text) : 1,
+        geboortedatum: DateTime.parse(selectedBirthDate.text),
+      );
 
-    PremieBedragParameters premieBedragParameters = PremieBedragParameters(
-      loonSocialVerzekeringen: currencyFormat.parse(inputWhite.text.replaceAll(_currency, '')),
-      loonZiektekostenVerzekeringsWet: currencyFormat.parse(inputWhite.text.replaceAll(_currency, '')),
-      socialeVerzekeringenDatum: DateTime.parse(selectedProcessDate.text),
-    );
+      PremieBedragParameters premieBedragParameters = PremieBedragParameters(
+        loonSocialVerzekeringen: currencyFormat.parse(inputWhite.text.replaceAll(_currency, '')),
+        loonZiektekostenVerzekeringsWet: currencyFormat.parse(inputWhite.text.replaceAll(_currency, '')),
+        socialeVerzekeringenDatum: DateTime.parse(selectedProcessDate.text),
+      );
 
-    WhkWerkgeverParameters whkWerkgeverParameters = WhkWerkgeverParameters(
-      taxno: selectedWerkgever.text,
-      inclusiveDate: DateTime.parse(selectedProcessDate.text),
-    );
+      WhkWerkgeverParameters whkWerkgeverParameters = WhkWerkgeverParameters(
+        taxno: selectedWerkgever.text,
+        inclusiveDate: DateTime.parse(selectedProcessDate.text),
+      );
 
-    CalculationParametersModel calculationParameters = CalculationParametersModel(
-      inhoudingParameters: inhoudingParameters,
-      premieBedragParameters: premieBedragParameters,
-      whkWerkgeverParameters: whkWerkgeverParameters,
-      werkgever: selectedWerkgever.text,
-      klantId: 1,
-      employeeId: 1,
-      premieBedragAlgemeenWerkloosheIdsFondsLaagHoog: "Hoog",
-      isPremieBedragUitvoeringsFondsvoordeOverheId: false,
-      premieBedragWetArbeIdsOngeschikheIdLaagHoog: "Hoog",
-      payee: "Werkgever",
-    );
+      CalculationParametersModel calculationParameters = CalculationParametersModel(
+        inhoudingParameters: inhoudingParameters,
+        premieBedragParameters: premieBedragParameters,
+        whkWerkgeverParameters: whkWerkgeverParameters,
+        werkgever: selectedWerkgever.text,
+        klantId: 1,
+        employeeId: 1,
+        premieBedragAlgemeenWerkloosheIdsFondsLaagHoog: "Hoog",
+        isPremieBedragUitvoeringsFondsvoordeOverheId: false,
+        premieBedragWetArbeIdsOngeschikheIdLaagHoog: "Hoog",
+        payee: "Werkgever",
+      );
 
-    var tokens = context.read<UserTokens>().user;
-    _berekeningen = await Endpoints().calculateBerekeningen(calculationParameters, tokens);
+      var tokens = context.read<UserTokens>().user;
+      _berekeningen = await Endpoints().calculateBerekeningen(calculationParameters, tokens);
 
-    pageCalculationController.animateToPage(1, duration: Duration(milliseconds: 250), curve: Curves.bounceInOut);
+      if (_berekeningen == null) {
+        return {'isOk': false, 'message': 'Something went wrong during the calculation process.'};
+      }
+
+      setState(() {
+        _algemeneWerkloosheidsFondsIndex = 0;
+        _algemeneWerkloosheidsFonds = _berekeningen?.premieBedrag!['premieBedragAlgemeenWerkloosheidsFondsHoog'];
+
+        _wetArbeidsOngeschikheidIndex = 0;
+        _wetArbeidsOngeschikheid = _berekeningen?.premieBedrag!['premieBedragWetArbeidsOngeschikheidHoog'];
+      });
+
+      return {'isOk': true, 'message': 'Successfully Calculated'};
+    } catch (e) {
+      return {'isOk': false, 'message': e.toString()};
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(children: [
-        PageView(
-          onPageChanged: (index) {
-            setState(() {
-              context.read<CalculationCurrentPage>().setCurrentPage(index);
-            });
-          },
-          controller: pageCalculationController,
-          // enableSideReveal: true,
-          // enableLoop: true,
-          children: [
-            Container(
-              color: Colors.white,
-              child: Page1(context),
-            ),
-            Container(color: Colors.white, child: Page2(context)),
-          ],
-        ),
-        Positioned(
-          bottom: 2,
-          left: context.read<CalculationCurrentPage>().currentPage == 1 ? 2 : null,
-          right: context.read<CalculationCurrentPage>().currentPage == 0 ? 2 : null,
-          child: FloatingActionButton(
-            foregroundColor: Colors.white,
-            backgroundColor: Colors.blueGrey,
-            onPressed: () {
-              var index = context.read<CalculationCurrentPage>().currentPage == 1 ? 0 : 1;
-              pageCalculationController.animateToPage(index,
-                  duration: Duration(milliseconds: 250), curve: Curves.linear);
-            },
-            mini: true,
-            child: context.read<CalculationCurrentPage>().currentPage == 0
-                ? const Icon(Icons.arrow_forward)
-                : const Icon(Icons.arrow_back),
+      appBar: AppBar(
+        title: Text('Berekeningen'),
+        centerTitle: true,
+        leading: context.read<CalculationCurrentPage>().currentPage == 1
+            ? IconButton(
+                icon: Icon(Icons.arrow_back_rounded),
+                onPressed: () {
+                  pageCalculationController.animateToPage(0,
+                      duration: Duration(milliseconds: 200), curve: Curves.linear);
+                },
+              )
+            : null,
+        actions: [
+          context.read<CalculationCurrentPage>().currentPage == 0
+              ? IconButton(
+                  icon: Icon(Icons.arrow_forward_rounded),
+                  onPressed: () {
+                    pageCalculationController.animateToPage(1,
+                        duration: Duration(milliseconds: 200), curve: Curves.linear);
+                  },
+                )
+              : Container(),
+        ],
+      ),
+      body: PageView(
+        onPageChanged: (index) {
+          setState(() {
+            context.read<CalculationCurrentPage>().setCurrentPage(index);
+          });
+        },
+        controller: pageCalculationController,
+        children: [
+          Container(
+            color: Colors.white,
+            child: Page1(context),
           ),
-        ),
-      ]),
+          Container(color: Colors.white, child: Page2(context)),
+        ],
+      ),
+      // ]),
     );
   }
 
@@ -246,7 +266,56 @@ class _CalculationParametersState extends State<CalculationParameters> {
         AlgemeneIndicator(context),
 
         //button
-        CalculateButton(context),
+        // CalculateButton(context),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width * 0.9,
+              child: ElevatedButton(
+                onPressed: !CanCalculate()
+                    ? null
+                    : () async {
+                        final message = SnackBar(
+                          backgroundColor: Colors.green,
+                          content: Text('Berekening wordt uitgevoerd'),
+                          duration: Duration(days: 1),
+                        );
+
+                        ScaffoldMessenger.of(context).showSnackBar(message);
+
+                        var result = await calculate();
+
+                        Future.delayed(Duration(seconds: 2), () {
+                          if (result['isOk']) {
+                            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                            pageCalculationController.animateToPage(1,
+                                duration: Duration(milliseconds: 250), curve: Curves.bounceInOut);
+                          } else {
+                            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
+                            final error = SnackBar(
+                              backgroundColor: Colors.redAccent,
+                              content: Text(result['message']),
+                              duration: Duration(seconds: 10),
+                              action: SnackBarAction(
+                                label: 'OK',
+                                onPressed: () {
+                                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                                },
+                              ),
+                            );
+
+                            ScaffoldMessenger.of(context).showSnackBar(error);
+                          }
+                        });
+                        // calculate();
+                      },
+                child: const Text('Bereken'),
+              ),
+            ),
+          ],
+        ),
       ],
     );
   }
@@ -761,12 +830,18 @@ class _CalculationParametersState extends State<CalculationParameters> {
                         ),
                       ),
                       keyboardType: TextInputType.number,
-                      inputFormatters: [
-                        CurrencyInputFormatter(
-                            leadingSymbol: _currency,
-                            useSymbolPadding: true,
-                            thousandSeparator: ThousandSeparator.Period,
-                            mantissaLength: 2)
+                      inputFormatters: <TextInputFormatter>[
+                        CurrencyTextInputFormatter(
+                          locale: 'nl_NL',
+                          decimalDigits: 2,
+                          symbol: '',
+                        )
+                        // CurrencyInputFormatter(
+                        //     // leadingSymbol: _currency,
+                        //     useSymbolPadding: true,
+                        //     thousandSeparator: ThousandSeparator.Period,
+                        //     mantissaLength: 2,
+                        // )
                       ]),
                 ),
               ],
@@ -802,12 +877,17 @@ class _CalculationParametersState extends State<CalculationParameters> {
                         ),
                       ),
                       keyboardType: TextInputType.number,
-                      inputFormatters: [
-                        CurrencyInputFormatter(
-                            leadingSymbol: _currency,
-                            useSymbolPadding: true,
-                            thousandSeparator: ThousandSeparator.Period,
-                            mantissaLength: 2)
+                      inputFormatters: <TextInputFormatter>[
+                        CurrencyTextInputFormatter(
+                          locale: 'nl_NL',
+                          decimalDigits: 2,
+                          symbol: '',
+                        )
+                        // CurrencyInputFormatter(
+                        //     leadingSymbol: _currency,
+                        //     useSymbolPadding: true,
+                        //     thousandSeparator: ThousandSeparator.Period,
+                        //     mantissaLength: 2)
                       ]),
                 ),
               ],
@@ -946,24 +1026,24 @@ class _CalculationParametersState extends State<CalculationParameters> {
     );
   }
 
-  Widget CalculateButton(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          width: MediaQuery.of(context).size.width * 0.9,
-          child: ElevatedButton(
-            onPressed: !CanCalculate()
-                ? null
-                : () {
-                    calculate();
-                  },
-            child: const Text('Bereken'),
-          ),
-        ),
-      ],
-    );
-  }
+  // Widget CalculateButton(BuildContext context) {
+  //   return Row(
+  //     mainAxisAlignment: MainAxisAlignment.center,
+  //     children: [
+  //       Container(
+  //         width: MediaQuery.of(context).size.width * 0.9,
+  //         child: ElevatedButton(
+  //           onPressed: !CanCalculate()
+  //               ? null
+  //               : () {
+  //                   calculate();
+  //                 },
+  //           child: const Text('Bereken'),
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
 
   bool CanCalculate() =>
       _selectedWoonlandIndex != null &&

@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:jwt_decode/jwt_decode.dart';
+import 'package:prechart_mobile/endpoints/endpoints.dart';
 import 'package:prechart_mobile/models/userModel.dart';
 
 class UserTokens with ChangeNotifier{
 
   UserModel _user = UserModel();
 
-  UserModel get user => _user;
+  UserModel get user
+  {
+    checkTokens();
+    return _user;
+  }
 
   bool isExpired() => (_user.bearerToken ==  null || _user.bearerToken!.isEmpty) ? false : Jwt.isExpired(_user.bearerToken ?? '');
 
@@ -30,5 +35,15 @@ class UserTokens with ChangeNotifier{
     _user.apiKey = "";
     _user.userName = "";
     notifyListeners();
+  }
+
+  void checkTokens() async {
+    if (Jwt.isExpired(_user?.bearerToken ?? '')) {
+      var result = await Endpoints().getRefreshTokens(_user);
+      _user.bearerToken = result?.bearerToken;
+      _user.refreshToken = result?.refreshToken;
+      _user.apiKey = result?.apiKey;
+      _user.userName = result?.userName;
+    }
   }
 }

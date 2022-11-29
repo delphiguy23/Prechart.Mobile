@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:prechart_mobile/providers/user_token_provider.dart';
 import 'package:prechart_mobile/providers/werkgever_provider.dart';
 import 'package:prechart_mobile/views/navigation.dart';
@@ -18,6 +19,8 @@ class WerkgeverView extends StatefulWidget {
 class _WerkgeverViewState extends State<WerkgeverView> {
   bool _isLoaded = false;
   List<Werkgever>? werkgevers;
+  List<Werkgever>? filteredWerkgevers;
+  bool _isSearching = false;
 
   @override
   void initState() {
@@ -41,7 +44,7 @@ class _WerkgeverViewState extends State<WerkgeverView> {
       }
     }
 
-    werkgevers= context.read<WerkgeversLists>().werkgevers;
+    werkgevers = filteredWerkgevers = context.read<WerkgeversLists>().werkgevers;
 
     if (werkgevers != null) {
       setState(() {
@@ -50,36 +53,85 @@ class _WerkgeverViewState extends State<WerkgeverView> {
     }
   }
 
+  void filteredSearch(String search) {
+    setState(() {
+      filteredWerkgevers = werkgevers
+          ?.where((werkgever) =>
+              (werkgever.naam ?? '').toLowerCase().contains(search.toLowerCase()) ||
+              (werkgever.fiscaalNummer ?? '').toLowerCase().contains(search.toLowerCase()))
+          .toList();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       bottomNavigationBar: Navigation(),
+      bottomNavigationBar: Navigation(),
       appBar: AppBar(
-        title: const Text('Werkgever'),
+        title: !_isSearching
+            ? Text('Werkgever')
+            : TextField(
+                autofocus: true,
+                style: TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                    icon: Icon(Icons.search, color: Colors.white),
+                    hintText: "Search",
+                    hintStyle: TextStyle(color: Colors.white)),
+                onChanged: (value) {
+                  filteredSearch(value);
+                  // context.read<PersonsLists>().searchPersons(value);
+                },
+              ),
+        actions: <Widget>[
+          _isSearching
+              ? IconButton(
+                  icon: Icon(Icons.cancel),
+                  onPressed: () {
+                    setState(() {
+                      _isSearching = false;
+                      filteredWerkgevers = werkgevers;
+                    });
+                  },
+                )
+              : IconButton(
+                  icon: Icon(Icons.search),
+                  onPressed: () {
+                    setState(() {
+                      _isSearching = true;
+                    });
+                  },
+                )
+        ],
       ),
       body: Visibility(
         visible: _isLoaded,
         replacement: const Center(child: CircularProgressIndicator()),
-        child: ListView.builder(
-            itemCount: werkgevers != null ?  werkgevers!.length : 0,
-            itemBuilder: (context, index) {
-              return ListTile(
-                title: Text(werkgevers?[index].naam ?? ''),
-                leading: const Icon(Icons.work),
-                subtitle: Text(werkgevers![index].fiscaalNummer),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          WerkgeverDetailsView(
-                            werkgevers![index],
-                          ),
-                    ),
-                  );
-                },
-              );
-            }),
+        child: LiquidPullToRefresh(
+          showChildOpacityTransition: false,
+          onRefresh: () async {
+            context.read<WerkgeversLists>().clearWerkgevers();
+            await getWerkgevers();
+          },
+          child: ListView.builder(
+              itemCount: filteredWerkgevers != null ? filteredWerkgevers!.length : 0,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(filteredWerkgevers?[index].naam ?? ''),
+                  leading: const Icon(Icons.work),
+                  subtitle: Text(filteredWerkgevers![index].fiscaalNummer),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => WerkgeverDetailsView(
+                          filteredWerkgevers![index],
+                        ),
+                      ),
+                    );
+                  },
+                );
+              }),
+        ),
       ),
     );
   }
