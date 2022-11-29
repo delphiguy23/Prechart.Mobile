@@ -10,11 +10,11 @@
 /.vs/PrechartMobile/FileContentIndex/93a514ec-56de-4f17-81d4-0fee6a44a488.vsidx
 /.vs/PrechartMobile/FileContentIndex/4a4b867a-daae-4adc-b873-647915a88f87.vsidx
 /.dart_tool
-build/
-buid/app/
+/build/
+/buid/app/
 /android/.gradlebuild/
-build/app/intermediates/*.*
+/build/app/intermediates/*.*
 /android/.gradle/
-.idea/
-.vs/
-.dart_tool/
+/.idea/
+/.vs/
+/.dart_tool/
