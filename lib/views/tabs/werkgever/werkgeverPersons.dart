@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:prechart_mobile/endpoints/endpoints.dart';
 import 'package:prechart_mobile/models/personModel.dart';
+import 'package:prechart_mobile/providers/endpoint_servers_provider.dart';
 import 'package:prechart_mobile/providers/navigation_provider.dart';
 import 'package:prechart_mobile/providers/persons_provider.dart';
 import 'package:prechart_mobile/providers/user_token_provider.dart';
@@ -44,7 +45,9 @@ class _WerkgeverPersonsState extends State<WerkgeverPersons> {
     var tokens = context.read<UserTokens>().user;
 
     if (persons == null || (persons?.isEmpty ?? true)) {
-      persons = await Endpoints().getEmployeePersons(tokens);
+      var servers = context.read<EndPointServers>().Endpoints;
+
+      persons = await Endpoints(endpoint: servers!).getEmployeePersons(tokens);
 
       if (persons != null && persons!.isNotEmpty) {
         context.read<PersonsLists>().setPersons(persons!);

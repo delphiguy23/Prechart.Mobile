@@ -9,6 +9,7 @@ import 'package:prechart_mobile/models/berekeningenModel.dart' as berekeningen;
 import 'package:prechart_mobile/models/calculationParametersModel.dart';
 import 'package:prechart_mobile/models/werkgeverModel.dart';
 import 'package:prechart_mobile/providers/calculation_current_page_provider.dart';
+import 'package:prechart_mobile/providers/endpoint_servers_provider.dart';
 import 'package:prechart_mobile/providers/taxJaar_provider.dart';
 import 'package:prechart_mobile/providers/user_token_provider.dart';
 import 'package:prechart_mobile/providers/werkgever_provider.dart';
@@ -91,14 +92,15 @@ class _CalculationParametersState extends State<CalculationParameters> {
     List<int>? taxYears;
     List<Werkgever>? werkgevers;
     var tokens = context.read<UserTokens>().user;
+    var servers = context.read<EndPointServers>().Endpoints!;
 
     if (context.read<TaxJaarLists>().taxJaar.isEmpty) {
-      taxYears = await Endpoints().getTaxYears(tokens);
+      taxYears = await Endpoints(endpoint: servers).getTaxYears(tokens);
       context.read<TaxJaarLists>().setTaxJaar(taxYears);
     }
 
     if (context.read<WerkgeversLists>().werkgevers.isEmpty) {
-      werkgevers = await Endpoints().getWerkgevers(tokens);
+      werkgevers = await Endpoints(endpoint: servers).getWerkgevers(tokens);
       context.read<WerkgeversLists>().setWerkgevers(werkgevers);
     }
 
@@ -167,8 +169,9 @@ class _CalculationParametersState extends State<CalculationParameters> {
         payee: "Werkgever",
       );
 
+      var servers = context.read<EndPointServers>().Endpoints!;
       var tokens = context.read<UserTokens>().user;
-      _berekeningen = await Endpoints().calculateBerekeningen(calculationParameters, tokens);
+      _berekeningen = await Endpoints(endpoint: servers).calculateBerekeningen(calculationParameters, tokens);
 
       if (_berekeningen == null) {
         return {'isOk': false, 'message': 'Something went wrong during the calculation process.'};
@@ -235,88 +238,90 @@ class _CalculationParametersState extends State<CalculationParameters> {
   }
 
   Widget Page1(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: <Widget>[
-        //Woonland
-        Woonland(context),
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: <Widget>[
+          //Woonland
+          Woonland(context),
 
-        //processdate
-        ProcessDate(context),
+          //processdate
+          ProcessDate(context),
 
-        //loontijdvak
-        loontijdvak(context),
+          //loontijdvak
+          loontijdvak(context),
 
-        //input white
-        White(context),
+          //input white
+          White(context),
 
-        //input green
-        Green(context),
+          //input green
+          Green(context),
 
-        //birthdate
-        BirthDate(context),
+          //birthdate
+          BirthDate(context),
 
-        //basis dagen
-        BasisDagen(context),
+          //basis dagen
+          BasisDagen(context),
 
-        //werkgevers
-        WerkgeverDropDownBox(context),
+          //werkgevers
+          WerkgeverDropDownBox(context),
 
-        //algemene
-        AlgemeneIndicator(context),
+          //algemene
+          AlgemeneIndicator(context),
 
-        //button
-        // CalculateButton(context),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              width: MediaQuery.of(context).size.width * 0.9,
-              child: ElevatedButton(
-                onPressed: !CanCalculate()
-                    ? null
-                    : () async {
-                        final message = SnackBar(
-                          backgroundColor: Colors.green,
-                          content: Text('Berekening wordt uitgevoerd'),
-                          duration: Duration(days: 1),
-                        );
+          //button
+          // CalculateButton(context),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: MediaQuery.of(context).size.width * 0.9,
+                child: ElevatedButton(
+                  onPressed: !CanCalculate()
+                      ? null
+                      : () async {
+                          const message = SnackBar(
+                            backgroundColor: Colors.green,
+                            content: Text('Berekening wordt uitgevoerd'),
+                            duration: Duration(days: 1),
+                          );
 
-                        ScaffoldMessenger.of(context).showSnackBar(message);
+                          ScaffoldMessenger.of(context).showSnackBar(message);
 
-                        var result = await calculate();
+                          var result = await calculate();
 
-                        Future.delayed(Duration(seconds: 2), () {
-                          if (result['isOk']) {
-                            ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                            pageCalculationController.animateToPage(1,
-                                duration: Duration(milliseconds: 250), curve: Curves.bounceInOut);
-                          } else {
-                            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                          Future.delayed(Duration(seconds: 2), () {
+                            if (result['isOk']) {
+                              ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                              pageCalculationController.animateToPage(1,
+                                  duration: Duration(milliseconds: 250), curve: Curves.bounceInOut);
+                            } else {
+                              ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
-                            final error = SnackBar(
-                              backgroundColor: Colors.redAccent,
-                              content: Text(result['message']),
-                              duration: Duration(seconds: 10),
-                              action: SnackBarAction(
-                                label: 'OK',
-                                onPressed: () {
-                                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                                },
-                              ),
-                            );
+                              final error = SnackBar(
+                                backgroundColor: Colors.redAccent,
+                                content: Text(result['message']),
+                                duration: Duration(seconds: 10),
+                                action: SnackBarAction(
+                                  label: 'OK',
+                                  onPressed: () {
+                                    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                                  },
+                                ),
+                              );
 
-                            ScaffoldMessenger.of(context).showSnackBar(error);
-                          }
-                        });
-                        // calculate();
-                      },
-                child: const Text('Bereken'),
+                              ScaffoldMessenger.of(context).showSnackBar(error);
+                            }
+                          });
+                          // calculate();
+                        },
+                  child: const Text('Bereken'),
+                ),
               ),
-            ),
-          ],
-        ),
-      ],
+            ],
+          ),
+        ],
+      ),
     );
   }
 
@@ -1025,25 +1030,6 @@ class _CalculationParametersState extends State<CalculationParameters> {
       ],
     );
   }
-
-  // Widget CalculateButton(BuildContext context) {
-  //   return Row(
-  //     mainAxisAlignment: MainAxisAlignment.center,
-  //     children: [
-  //       Container(
-  //         width: MediaQuery.of(context).size.width * 0.9,
-  //         child: ElevatedButton(
-  //           onPressed: !CanCalculate()
-  //               ? null
-  //               : () {
-  //                   calculate();
-  //                 },
-  //           child: const Text('Bereken'),
-  //         ),
-  //       ),
-  //     ],
-  //   );
-  // }
 
   bool CanCalculate() =>
       _selectedWoonlandIndex != null &&

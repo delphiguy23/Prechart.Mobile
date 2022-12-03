@@ -18,3 +18,11 @@
 /.idea/
 /.vs/
 /.dart_tool/
+/lib/generated/
+/windows/flutter/ephemeral/
+/linux/flutter/
+/windows/flutter/
+/ios/Runner/
+/android/app/
+/macos/Flutter/
+/android/local.properties

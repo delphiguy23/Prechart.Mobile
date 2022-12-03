@@ -1,4 +1,8 @@
+import 'package:prechart_mobile/helpers/mongo_helper.dart';
+import 'package:prechart_mobile/models/endPointModel.dart';
 import 'package:prechart_mobile/providers/calculation_current_page_provider.dart';
+import 'package:prechart_mobile/providers/endpoint_provider.dart';
+import 'package:prechart_mobile/providers/endpoint_servers_provider.dart';
 import 'package:prechart_mobile/providers/navigation_provider.dart';
 import 'package:prechart_mobile/providers/persons_cumulatief_provider.dart';
 import 'package:prechart_mobile/providers/persons_provider.dart';
@@ -17,6 +21,7 @@ import 'package:prechart_mobile/views/werkgeverView.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (context) => NavigationIndex()),
@@ -26,6 +31,8 @@ void main() {
       ChangeNotifierProvider(create: (context) => TaxJaarLists()),
       ChangeNotifierProvider(create: (context) => UserTokens()),
       ChangeNotifierProvider(create: (context) => CalculationCurrentPage()),
+      ChangeNotifierProvider(create: (context) => EndPointsList()),
+      ChangeNotifierProvider(create: (context) => EndPointServers()),
     ],
     child: MyApp(),
   ));

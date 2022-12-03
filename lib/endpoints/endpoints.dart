@@ -1,8 +1,11 @@
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:jwt_decode/jwt_decode.dart';
+import 'package:prechart_mobile/helpers/endpoint_domains.dart';
 import 'package:prechart_mobile/helpers/helpers.dart';
 import 'package:prechart_mobile/models/berekeningenModel.dart' as berekeningen;
 import 'package:prechart_mobile/models/calculationParametersModel.dart';
+import 'package:prechart_mobile/models/endPointModel.dart';
 import 'package:prechart_mobile/models/personCumulatiefModel.dart';
 import 'package:prechart_mobile/models/taxYearModel.dart';
 import 'package:prechart_mobile/models/userModel.dart';
@@ -15,6 +18,10 @@ import '../models/werkgeverModel.dart';
 import '../models/personModel.dart';
 
 class Endpoints {
+  Endpoints({ this.endpoint});
+
+  late EndPointModel? endpoint;
+
   String userCredential = '';
 
   var httpClient = http.Client();
@@ -43,7 +50,7 @@ class Endpoints {
     };
 
     var response = await httpClient.post(
-      Uri.parse(userValidate),
+      Uri.parse('${endpoint?.servers?.user}/platform/service/api/users/validate'),
       headers: headers,
       body: userCredential,
     );
@@ -61,7 +68,7 @@ class Endpoints {
     };
 
     var response = await httpClient.post(
-      Uri.parse(userRefresh),
+      Uri.parse('${endpoint?.servers?.user}/platform/service/api/users/refresh'),
       headers: headers,
       body: userModelToJson(tokens),
     );
@@ -89,7 +96,7 @@ class Endpoints {
       };
 
       var response = await httpClient.get(
-        Uri.parse(werkgeversAll),
+        Uri.parse('${endpoint?.servers?.werkgever}/platform/service/api/werkgever/all'),
         headers: headers,
       );
 
@@ -116,7 +123,7 @@ class Endpoints {
       };
 
       var response = await httpClient.get(
-        Uri.parse(personsWergeverAll + taxNo),
+        Uri.parse('${endpoint?.servers?.person}/platform/service/api/person/werkgever/$taxNo'),
         headers: headers,
       );
 
@@ -143,7 +150,7 @@ class Endpoints {
       };
 
       var response = await httpClient.get(
-        Uri.parse(personsEmployeeAll),
+        Uri.parse('${endpoint?.servers?.person}/platform/service/api/person/type/1'),
         headers: headers,
       );
 
@@ -169,7 +176,7 @@ class Endpoints {
       };
 
       var response = await httpClient.get(
-        Uri.parse(personsCumulatiefs + bsn),
+        Uri.parse('${endpoint?.servers?.person}/platform/service/api/person/cumulative/$bsn'),
         headers: headers,
       );
 
@@ -195,7 +202,7 @@ class Endpoints {
       };
 
       var response = await httpClient.get(
-        Uri.parse(allWoonlandBeginsel),
+        Uri.parse('${endpoint?.servers?.berekingen}/platform/service/api/berekenen/allewoonlandbeginsel'),
         headers: headers,
       );
 
@@ -222,7 +229,7 @@ class Endpoints {
       };
 
       var response = await httpClient.get(
-        Uri.parse(taxYear),
+        Uri.parse('${endpoint?.servers?.belasting}/platform/service/api/berekenen/jaar'),
         headers: headers,
       );
 
@@ -252,7 +259,7 @@ class Endpoints {
       var jsonParameters = calculationParametersToJson(parameters);
 
       var response = await httpClient.post(
-        Uri.parse(calculate),
+        Uri.parse('${endpoint?.servers?.belasting}/platform/service/api/berekeningen'),
         headers: headers,
         body: jsonParameters,
       );

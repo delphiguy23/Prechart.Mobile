@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
+import 'package:prechart_mobile/providers/endpoint_servers_provider.dart';
 import 'package:prechart_mobile/providers/user_token_provider.dart';
 import 'package:prechart_mobile/providers/werkgever_provider.dart';
 import 'package:prechart_mobile/views/navigation.dart';
@@ -37,7 +38,9 @@ class _WerkgeverViewState extends State<WerkgeverView> {
     var tokens = context.read<UserTokens>().user;
 
     if (context.read<WerkgeversLists>().werkgevers.isEmpty) {
-      werkgevers = await Endpoints().getWerkgevers(tokens);
+      var servers = context.read<EndPointServers>().Endpoints!;
+
+      werkgevers = await Endpoints(endpoint: servers).getWerkgevers(tokens);
 
       if (werkgevers != null && werkgevers!.isNotEmpty) {
         context.read<WerkgeversLists>().setWerkgevers(werkgevers!);

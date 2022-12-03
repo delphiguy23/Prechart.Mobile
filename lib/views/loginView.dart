@@ -1,11 +1,18 @@
+import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:prechart_mobile/endpoints/endpoints.dart';
+import 'package:prechart_mobile/helpers/endpoint_domains.dart';
+import 'package:prechart_mobile/helpers/mongo_helper.dart';
 import 'package:prechart_mobile/models/berekeningenModel.dart';
+import 'package:prechart_mobile/models/endPointModel.dart';
 import 'package:prechart_mobile/models/personModel.dart';
 import 'package:prechart_mobile/models/tokensModel.dart';
+import 'package:prechart_mobile/providers/endpoint_provider.dart';
+import 'package:prechart_mobile/providers/endpoint_servers_provider.dart';
 import 'package:prechart_mobile/providers/persons_provider.dart';
 import 'package:prechart_mobile/providers/taxJaar_provider.dart';
 import 'package:prechart_mobile/providers/user_token_provider.dart';
@@ -22,9 +29,29 @@ class _LoginViewState extends State<LoginView> {
   bool _showPassword = false;
   TextEditingController userInput = TextEditingController();
   TextEditingController passwordInput = TextEditingController();
+  List<EndPointModel> endpoints = [];
+  String _endPoint = '';
 
   int loginAttempts = 0;
   Tokens? tokens;
+
+  void connectToMongo() async {
+    endpoints = await MongoDatabase().connect();
+
+    inspect(endpoints);
+
+    if (endpoints != null && endpoints.isNotEmpty) {
+      context.read<EndPointsList>().setEndPoints(endpoints);
+    }
+
+    setState(() {
+      endpoints = context.read<EndPointsList>().Endpoints;
+      _endPoint = endpoints[0].servers!.server!;
+
+      context.read<EndPointServers>().setEndPoint( endpoints[0]);
+
+    });
+  }
 
   Future<bool> doLogin() async {
     setState(() {
@@ -32,7 +59,10 @@ class _LoginViewState extends State<LoginView> {
     });
 
     try {
-      tokens = await Endpoints().Login(userInput.text, passwordInput.text);
+      print ('aaa');
+      var servers = context.read<EndPointServers>().Endpoints;
+      print('aabb');
+      tokens = await Endpoints(endpoint: servers).Login(userInput.text, passwordInput.text);
 
       if (tokens != null) {
         context.read<UserTokens>().clearUser();
@@ -45,9 +75,9 @@ class _LoginViewState extends State<LoginView> {
         var user = context.read<UserTokens>().user;
 
         final data = await Future.wait([
-          Endpoints().getWerkgevers(user),
-          Endpoints().getEmployeePersons(user),
-          Endpoints().getTaxYears(user),
+          Endpoints(endpoint: servers).getWerkgevers(user),
+          Endpoints(endpoint: servers).getEmployeePersons(user),
+          Endpoints(endpoint: servers).getTaxYears(user),
         ]);
 
         var werkgevers = data[0] as List<werkgeverModel.Werkgever>?;
@@ -78,6 +108,17 @@ class _LoginViewState extends State<LoginView> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    connectToMongo();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Visibility(
@@ -96,6 +137,40 @@ class _LoginViewState extends State<LoginView> {
               const Text(
                 'Login',
                 style: TextStyle(fontSize: 40),
+              ),
+              const SizedBox(height: 20),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 5),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(
+                    color: Colors.grey,
+                    width: 1,
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Select Server'),
+                    DropdownButton(
+                      value: _endPoint,
+                      items: endpoints.map((EndPointModel endpoint) {
+                        return DropdownMenuItem(
+                          value: endpoint.servers?.server ?? '',
+                          child: Text(endpoint.servers?.server ?? ''),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          _endPoint = value.toString();
+                          context.read<EndPointServers>().setEndPoint( endpoints.firstWhere((element) => element.servers!.server == _endPoint));
+                          SetServers(_endPoint);
+                        });
+                      },
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(height: 20),
               TextField(
@@ -183,5 +258,15 @@ class _LoginViewState extends State<LoginView> {
             child: CircularProgressIndicator(),
           );
         });
+  }
+
+  void SetServers(String endpoint) {
+    var _endpoints = endpoints.firstWhere((element) => element.servers?.server == endpoint);
+
+    werkgeverDomain = _endpoints.servers?.werkgever ?? '';
+    personDomain = _endpoints.servers?.person ?? '';
+    loonheffingDomain = _endpoints.servers?.loonheffing ?? '';
+    berekingenDomain = _endpoints.servers?.berekingen ?? '';
+    belastingDomain = _endpoints.servers?.belasting ?? '';
   }
 }

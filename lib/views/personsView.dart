@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:prechart_mobile/endpoints/endpoints.dart';
 import 'package:prechart_mobile/models/personModel.dart';
+import 'package:prechart_mobile/providers/endpoint_servers_provider.dart';
 import 'package:prechart_mobile/providers/navigation_provider.dart';
 import 'package:prechart_mobile/providers/user_token_provider.dart';
 import 'package:prechart_mobile/views/navigation.dart';
@@ -39,7 +40,9 @@ class _PersonsViewState extends State<PersonsView> {
     var a = context.read<PersonsLists>().persons.isEmpty;
 
     if (context.read<PersonsLists>().persons.isEmpty) {
-      persons = await Endpoints().getEmployeePersons(tokens);
+      var servers = context.read<EndPointServers>().Endpoints!;
+
+      persons = await Endpoints(endpoint: servers).getEmployeePersons(tokens);
       context.read<PersonsLists>().clearPersons();
 
       if (persons != null && persons!.isNotEmpty) {
