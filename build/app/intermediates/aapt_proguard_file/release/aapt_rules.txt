@@ -1,3 +1,0 @@
--keep class android.app.Application { <init>(); }
--keep class androidx.core.app.CoreComponentFactory { <init>(); }
--keep class prechart.com.prechart_mobile.MainActivity { <init>(); }
