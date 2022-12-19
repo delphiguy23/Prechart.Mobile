@@ -17,7 +17,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.0+1
+version: 1.0.1+2
 
 environment:
   sdk: '>=2.18.4 <3.0.0'
@@ -46,6 +46,8 @@ dependencies:
   lottie: ^2.0.0
   flutter_zoom_drawer: ^3.0.3
   liquid_pull_to_refresh: ^3.0.1
+  flutter_launcher_icons: ^0.11.0
+  animated_splash_screen: ^1.3.0
 
 dev_dependencies:
   flutter_test:
@@ -62,6 +64,11 @@ dev_dependencies:
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter packages.
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/logos/logo2.jpg"
+
 flutter:
 
   # The following line ensures that the Material Icons font is
@@ -79,10 +86,14 @@ flutter:
     - assets/animations/53391-yelly-emoji-no.json
     - assets/animations/83227-happy-emoji.json
     - assets/animations/93686-user-icon-animate.json
+    - assets/animations/100841-developer-discussing-different-options.json
+    - assets/animations/business-salesman.gif
     - assets/images/about-1-768x512.jpg
     - assets/images/about-2-768x512.jpg
     - assets/images/about-3-768x512.jpg
     - assets/images/about-4-768x512.jpg
+    - assets/logos/logo.png
+    - assets/logos/logo2.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

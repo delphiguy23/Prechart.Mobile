@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer' as logdev;
 
 import 'package:get/get.dart';
 import 'package:person_portal/controller/base_controller.dart';
@@ -30,7 +31,11 @@ class RestRepository with BaseController {
       showLoading('Loading...');
 
       loginController.retriesAttempted.value++;
-      var endpoint = mongoController.endPointServers.value.firstWhere((endpoint) => endpoint.active!);
+      var endpoint = mongoController.endPointServers.value.firstWhere((endpoint) => endpoint.active! && endpoint.servers?.server == mongoController.selectedServer.value);
+
+      print(mongoController.selectedServer.value);
+      print(endpoint.servers?.server);
+
       var login =
           LoginModel(username: loginController.userName.value.text, password: loginController.passWord.value.text);
       var result = await BaseClient()
@@ -75,7 +80,7 @@ class RestRepository with BaseController {
         return;
       }
 
-      var endpoint = mongoController.endPointServers.value.firstWhere((endpoint) => endpoint.active!);
+      var endpoint = mongoController.endPointServers.value.firstWhere((endpoint) => endpoint.active! && endpoint.servers?.server == mongoController.selectedServer.value);
 
       var result = await BaseClient()
           .get(endpoint.servers?.person ?? '', '/platform/service/api/person/getprofile/', personId,
@@ -104,9 +109,11 @@ class RestRepository with BaseController {
   Future<bool> Register() async {
     try {
       if (await RefreshToken()) {
+        print('a');
         showLoading('Loading...');
 
-        var endpoint = mongoController.endPointServers.value.firstWhere((endpoint) => endpoint.active!);
+        var endpoint = mongoController.endPointServers.value.firstWhere((endpoint) => endpoint.active! && endpoint.servers?.server == mongoController.selectedServer.value);
+        print(endpoint.servers?.server);
 
         var register = PersonRegisterModel(
           firstName: profileController.profile.value.voorvoegsel ?? '',
@@ -118,6 +125,9 @@ class RestRepository with BaseController {
           personId: profileController.profile.value.id,
           roles: ['Employee'],
         );
+
+        logdev.log(tokenController.bearerToken.value);
+        print(json.encode(register));
 
         var result = await BaseClient()
             .post(endpoint.servers?.user ?? '', '/platform/service/api/users/register', register,
@@ -152,7 +162,7 @@ class RestRepository with BaseController {
 
     try {
       if (!tokenController.isValidToken()) {
-        var endpoint = mongoController.endPointServers.value.firstWhere((endpoint) => endpoint.active!);
+        var endpoint = mongoController.endPointServers.value.firstWhere((endpoint) => endpoint.active! && endpoint.servers?.server == mongoController.selectedServer.value);
 
         var tokens = TokenModel(
           bearerToken: tokenController.bearerToken.value,
@@ -202,7 +212,7 @@ class RestRepository with BaseController {
           return;
         }
 
-        var endpoint = mongoController.endPointServers.value.firstWhere((endpoint) => endpoint.active!);
+        var endpoint = mongoController.endPointServers.value.firstWhere((endpoint) => endpoint.active! && endpoint.servers?.server == mongoController.selectedServer.value);
 
         var result = await BaseClient()
             .get(endpoint.servers?.person ?? '', '/platform/service/api/person/username/', username,
@@ -248,7 +258,7 @@ class RestRepository with BaseController {
           return false;
         }
 
-        var endpoint = mongoController.endPointServers.value.firstWhere((endpoint) => endpoint.active!);
+        var endpoint = mongoController.endPointServers.value.firstWhere((endpoint) => endpoint.active! && endpoint.servers?.server == mongoController.selectedServer.value);
 
         var forUpsert = personDataController.prepareForUpdate();
 
@@ -283,7 +293,7 @@ class RestRepository with BaseController {
           return;
         }
 
-        var endpoint = mongoController.endPointServers.value.firstWhere((endpoint) => endpoint.active!);
+        var endpoint = mongoController.endPointServers.value.firstWhere((endpoint) => endpoint.active! && endpoint.servers?.server == mongoController.selectedServer.value);
 
         var result = await BaseClient()
             .get(endpoint.servers?.person ?? '', '/platform/service/api/person/cumulative/', personDataController.personData.value.sofiNr,

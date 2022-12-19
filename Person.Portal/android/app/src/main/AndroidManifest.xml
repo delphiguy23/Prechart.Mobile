@@ -2,7 +2,7 @@
     package="com.prechart.person_portal">
     <uses-permission android:name="android.permission.INTERNET" />
    <application
-        android:label="person_portal"
+        android:label="Person Portal"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

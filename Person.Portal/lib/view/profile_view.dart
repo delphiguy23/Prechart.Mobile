@@ -37,35 +37,58 @@ class ProfilePage extends GetView<MenuController> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Werkgever', style: TextStyle( fontSize: 12, fontWeight: FontWeight.bold ),),
-                    Text(personDataController.personSummary.value.werkgever ?? '', style: TextStyle( fontSize: 12 ),),
+                    Text(
+                      'Werkgever',
+                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      personDataController.personSummary.value.werkgever ?? '',
+                      style: TextStyle(fontSize: 12),
+                    ),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('FiscaalNummer', style: TextStyle( fontSize: 12, fontWeight: FontWeight.bold ),),
-                    Text(personDataController.personSummary.value.werkgeverFiscaalNumber ?? '', style: TextStyle( fontSize: 12 ),),
+                    Text(
+                      'FiscaalNummer',
+                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      personDataController.personSummary.value.werkgeverFiscaalNumber ?? '',
+                      style: TextStyle(fontSize: 12),
+                    ),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Cumulatieve LnLbPh', style: TextStyle( fontSize: 12, fontWeight: FontWeight.bold ),),
-                    Text(ToEuro( personDataController.personSummary.value.cumulatieveLnLbPh), style: TextStyle( fontSize: 12 ),),
+                    Text(
+                      'Cumulatieve LnLbPh',
+                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      ToEuro(personDataController.personSummary.value.cumulatieveLnLbPh),
+                      style: TextStyle(fontSize: 12),
+                    ),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Cumulatieve LnSv', style: TextStyle( fontSize: 12, fontWeight: FontWeight.bold ),),
-                    Text(ToEuro(personDataController.personSummary.value.cumulatieveLnSv), style: TextStyle( fontSize: 12 ),),
+                    Text(
+                      'Cumulatieve LnSv',
+                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      ToEuro(personDataController.personSummary.value.cumulatieveLnSv),
+                      style: TextStyle(fontSize: 12),
+                    ),
                   ],
                 ),
               ],
             ),
           ),
-
           Obx(
             () => profileBuilder(personDataController.achternaamController.value, 'Achternaam',
                 personDataController.personData.value.significantAchternaam, TextFieldType.text),
@@ -95,7 +118,7 @@ class ProfilePage extends GetView<MenuController> {
             children: [
               Obx(() => ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    primary: personDataController.isEditing.value ? Colors.green : null,
+                    backgroundColor: personDataController.isEditing.value ? Colors.green : null,
                   ),
                   onPressed: personDataController.isEditing.value
                       ? () async {
@@ -112,7 +135,7 @@ class ProfilePage extends GetView<MenuController> {
                   child: personDataController.isEditing.value ? Text('Update') : Text('Edit'))),
               Obx(() => ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.red,
+                    backgroundColor: Colors.red,
                   ),
                   onPressed: personDataController.isEditing.value
                       ? () async {

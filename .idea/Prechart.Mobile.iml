@@ -6,6 +6,9 @@
       <excludeFolder url="file://$MODULE_DIR$/Person.Portal/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/Person.Portal/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/Person.Portal/build" />
+      <excludeFolder url="file://$MODULE_DIR$/Admin.Portal/build" />
+      <excludeFolder url="file://$MODULE_DIR$/Admin.Portal/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/Admin.Portal/.dart_tool" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

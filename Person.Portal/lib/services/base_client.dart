@@ -56,15 +56,14 @@ class BaseClient {
   dynamic _processResponse(http.Response response) {
     var jsonData = json.decode(response.body);
     print ('status ${response.statusCode}');
+    print (utf8.decode(response.bodyBytes));
     switch (response.statusCode) {
       case 200:
         var responseJson = utf8.decode(response.bodyBytes);
         return responseJson;
-        break;
       case 201:
         var responseJson = utf8.decode(response.bodyBytes);
         return responseJson;
-        break;
       case 400:
         throw BadRequestException(utf8.decode(response.bodyBytes), response.request!.url.toString());
       case 401:
