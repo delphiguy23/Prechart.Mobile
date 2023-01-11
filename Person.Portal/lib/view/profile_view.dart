@@ -94,11 +94,11 @@ class ProfilePage extends GetView<MenuController> {
                 personDataController.personData.value.significantAchternaam, TextFieldType.text),
           ),
           Obx(
-            () => profileBuilder(personDataController.voorvoegselController.value, 'Voorvoegsel',
+            () => profileBuilder(personDataController.voorvoegselController.value, 'Voorvoegsels',
                 personDataController.personData.value.voorvoegsel, TextFieldType.text),
           ),
           Obx(
-            () => profileBuilder(personDataController.voorlettersController.value, 'Voorletter',
+            () => profileBuilder(personDataController.voorlettersController.value, 'Voorletters',
                 personDataController.personData.value.voorletter, TextFieldType.text),
           ),
           Obx(

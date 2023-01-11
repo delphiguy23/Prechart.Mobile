@@ -135,6 +135,7 @@ class RestRepository with BaseController {
             .catchError(handleErrorSnackBar);
 
         if (result == null) {
+          print ('result is null');
           return false;
         }
 

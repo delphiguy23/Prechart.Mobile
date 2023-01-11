@@ -34,7 +34,7 @@ class BinnenlandPage extends GetView<MenuController> {
                   personDataController.personData.value.adresBinnenland?.str, TextFieldType.text),
             ),
             Obx(
-              () => profileBuilder(personDataController.houseNoController.value, 'HuisNumber',
+              () => profileBuilder(personDataController.houseNoController.value, 'Huisnummer',
                   personDataController.personData.value.adresBinnenland?.huisNr, TextFieldType.text),
             ),
             Obx(

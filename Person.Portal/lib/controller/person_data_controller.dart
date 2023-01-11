@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:person_portal/helper/general_helper.dart';
@@ -125,6 +128,11 @@ class PersonDataController extends GetxController{
   }
 
   void updateBuitenland(){
+    if (personData.value.adresBuitenland == null)
+    {
+      personData.value.adresBuitenland = AdresBuitenland();
+    }
+
     personData.value.adresBuitenland?.str = streetBuitenController.value.text;
     personData.value.adresBuitenland?.huisNr = houseNoBuitenController.value.text;
     personData.value.adresBuitenland?.locOms = locOmsBuitenController.value.text;

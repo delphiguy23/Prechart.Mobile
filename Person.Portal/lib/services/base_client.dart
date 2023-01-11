@@ -30,7 +30,6 @@ class BaseClient {
     var uri = Uri.parse(baseUrl + api);
     var payload = json.encode(payloadObj);
 
-    // print ('payload: $payload');
 
     try {
       var response = await http
@@ -55,8 +54,6 @@ class BaseClient {
 
   dynamic _processResponse(http.Response response) {
     var jsonData = json.decode(response.body);
-    print ('status ${response.statusCode}');
-    print (utf8.decode(response.bodyBytes));
     switch (response.statusCode) {
       case 200:
         var responseJson = utf8.decode(response.bodyBytes);

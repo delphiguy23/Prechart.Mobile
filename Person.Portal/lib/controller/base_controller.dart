@@ -1,4 +1,6 @@
 
+import 'dart:developer';
+
 import 'package:person_portal/helper/dialog_helper.dart';
 import 'package:person_portal/services/app_exceptions.dart';
 
@@ -27,6 +29,8 @@ class BaseController {
 
   void handleErrorSnackBar(error) {
     hideLoading();
+    print(error);
+    log(error);
     if (error is BadRequestException) {
       var message = error.message;
       DialogHelper.showSnackBarError(message: message);

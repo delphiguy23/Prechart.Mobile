@@ -20,7 +20,8 @@ class TaxFilesCollectievePage extends StatelessWidget {
             itemBuilder: (context, index) {
               return ExpansionTile(
                 title: Text(
-                    'NumIv: ${personDataController.personData.value.taxPaymentDetails?[index].numIv ?? ''} Periode: ${personDataController.personData.value.taxPaymentDetails?[index].taxPeriode ?? ''}'),
+                  style: TextStyle(fontSize: 15, color: personDataController.personData.value.taxPaymentDetails?[index].collectieveType?.toLowerCase() == 'Correctie'.toLowerCase() ? Colors.red : Colors.green),
+                    'NumIv: ${personDataController.personData.value.taxPaymentDetails?[index].numIv ?? ''} Periode: ${personDataController.personData.value.taxPaymentDetails?[index].taxPeriode ?? ''} Type: ${personDataController.personData.value.taxPaymentDetails?[index].collectieveType ?? ''}'),
                 children: [
                   LineListTile('LnLbPh',
                       'Loon voor de Loonbelasting en Premieheffingen Volksverzekeringen\n${ToEuro(personDataController.personData.value.taxPaymentDetails?[index].werknemersgegevens?.lnLbPh)}'),

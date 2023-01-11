@@ -34,7 +34,7 @@ class BuitenlandPage extends GetView<MenuController> {
               personDataController.personData.value.adresBuitenland?.str, TextFieldType.text),
         ),
         Obx(
-              () => profileBuilder(personDataController.houseNoBuitenController.value, 'HuisNumber',
+              () => profileBuilder(personDataController.houseNoBuitenController.value, 'Huisnummer',
               personDataController.personData.value.adresBuitenland?.huisNr, TextFieldType.text),
         ),
         Obx(
@@ -54,7 +54,7 @@ class BuitenlandPage extends GetView<MenuController> {
               personDataController.personData.value.adresBuitenland?.reg, TextFieldType.text),
         ),
         Obx(
-              () => profileBuilder(personDataController.landcodeBuitenController.value, 'LandCode',
+              () => profileBuilder(personDataController.landcodeBuitenController.value, 'Landcode',
               personDataController.personData.value.adresBuitenland?.landCd, TextFieldType.text),
         ),
         SizedBox(height: 20),
