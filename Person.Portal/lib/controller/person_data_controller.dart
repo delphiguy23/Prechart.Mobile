@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:dice_bear/dice_bear.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:person_portal/helper/general_helper.dart';
@@ -43,6 +44,9 @@ class PersonDataController extends GetxController{
   var gestachtSelectedIndex = 0.obs;
   var gestachtOldSelectedIndex = 0.obs;
 
+  var avatarCreated = false.obs;
+  var avatarPictureUri = "".obs;
+
   List<String> geslachtList() => ['Onbekend', 'Mannelijk', 'Vrouwelijk', 'Niet gespecificeerd'];
 
   String get personName => '${achternaamController.value.text} (${voorlettersController.value.text})';
@@ -55,6 +59,16 @@ class PersonDataController extends GetxController{
     }
 
     return '';
+  }
+
+  String getAvatar(){
+    if (avatarCreated.value == false){
+          avatarCreated.value = true;
+              Avatar avatar =   DiceBearBuilder.withRandomSeed(sprite: DiceBearSprite.bigSmile).build();
+              avatarPictureUri.value = avatar.svgUri.toString();
+        }
+
+    return avatarPictureUri.value;
   }
 
   void initEditControllers () {

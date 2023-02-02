@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:person_portal/controller/menu_controller.dart';
 import 'package:person_portal/controller/person_data_controller.dart';
@@ -33,10 +34,7 @@ class MenuPage extends GetView<MenuController> {
                   padding: const EdgeInsets.all(10),
                   child: Column(
                     children: [
-                      Icon(
-                        Icons.person,
-                        size: 200,
-                      ),
+                      SvgPicture.network(personDataController.getAvatar(), height: 200, width: 200,),
                       Text(personDataController.personName),
                       Text(personDataController.maskedSofiNumber(), style: TextStyle(fontSize: 10)),
                       SizedBox(height: 10),

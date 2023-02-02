@@ -1,6 +1,8 @@
 import 'dart:developer';
 
+import 'package:dice_bear/dice_bear.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:person_portal/controller/menu_controller.dart';
 import 'package:person_portal/controller/person_data_controller.dart';
@@ -22,11 +24,8 @@ class ProfilePage extends GetView<MenuController> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          const Center(
-            child: Icon(
-              Icons.person,
-              size: 100,
-            ),
+           Center(
+            child: SvgPicture.network(personDataController.getAvatar(), height: 200, width: 200,),
           ),
           Text(personDataController.maskedSofiNumber()),
           Container(
@@ -271,4 +270,6 @@ class ProfilePage extends GetView<MenuController> {
       );
     }
   }
+
+
 }
