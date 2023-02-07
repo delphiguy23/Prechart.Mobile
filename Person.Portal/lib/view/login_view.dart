@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:person_portal/controller/login_controller.dart';
@@ -113,12 +115,19 @@ class LoginPage extends StatelessWidget {
                             loginController.checkIfCanLogin();
 
                             if (loginController.loggedIn.value) {
-                              DialogHelper.showSnackBar(
-                                  title: 'Login', message: 'User logged-in successfully.', duration: 5);
-                              Future.delayed(const Duration(seconds: 1), () async {
+                              try{
                                 await RestRepository().FetchPersonData();
-                                Get.to(() => HomePage());
-                              });
+
+                                DialogHelper.showSnackBar(
+                                    title: 'Login', message: 'User logged-in successfully.', duration: 5);
+                                Future.delayed(const Duration(seconds: 1), () async {
+                                  await RestRepository().FetchDaywage();
+                                  Get.to(() => HomePage());
+                                });
+                              }
+                              catch (e){
+                                DialogHelper.showSnackBarError(message: 'Failed to Authenticate and Authorize user', duration: 5);
+                              }
                             }
                                 }
                               : null,

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:person_portal/controller/menu_controller.dart';
+import 'package:person_portal/repository/rest_repository.dart';
 import 'package:person_portal/widget/menu_widget.dart';
 
 class LogOutPage extends GetView<MenuController> {

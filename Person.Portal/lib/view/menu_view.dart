@@ -9,6 +9,7 @@ import 'package:person_portal/controller/person_data_controller.dart';
 import 'package:person_portal/helper/general_helper.dart';
 import 'package:person_portal/model/menu_item.dart' as menu_item;
 import 'package:person_portal/model/menu_items.dart' as menu_items;
+import 'package:person_portal/repository/rest_repository.dart';
 
 class MenuPage extends GetView<MenuController> {
   final menu_item.MenuItem currentItem;
@@ -103,7 +104,7 @@ class MenuPage extends GetView<MenuController> {
                 alignment: Alignment.bottomCenter,
                 child: ElevatedButton.icon(
                   icon: Icon(Icons.exit_to_app),
-                    onPressed: () {
+                    onPressed: () async {
                       Get.dialog(
                         AlertDialog(
                           title: const Text('LogOut'),

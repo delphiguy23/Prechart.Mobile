@@ -9,6 +9,7 @@ class MenuItems {
   static const adresBinnenland = menu_item.MenuItem('Address Binnenland', Icons.house);
   static const adresBuitenland = menu_item.MenuItem('Address Buitenland', Icons.house);
   static const taxfiles = menu_item.MenuItem('TaxFiles', Icons.euro);
+  static const daywage = menu_item.MenuItem('Daywage', Icons.account_balance_wallet);
   static const cumulatieve = menu_item.MenuItem('Cumulatieves', Icons.calculate_sharp);
   static const about = menu_item.MenuItem('About Us', Icons.info);
   static const help = menu_item.MenuItem('Help', Icons.help);
@@ -20,6 +21,7 @@ class MenuItems {
     adresBinnenland,
     adresBuitenland,
     taxfiles,
+    daywage,
     cumulatieve,
     about,
     // help,

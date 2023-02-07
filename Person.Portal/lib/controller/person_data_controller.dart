@@ -5,15 +5,17 @@ import 'package:dice_bear/dice_bear.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:person_portal/helper/general_helper.dart';
+import 'package:person_portal/model/person_daywage_model.dart';
 import 'package:person_portal/model/person_model.dart';
 import 'package:person_portal/model/person_profile_summary_model.dart';
 import 'package:person_portal/model/person_upsert_model.dart';
 import 'package:person_portal/model/person_data_cumulatieve_model.dart';
 
-class PersonDataController extends GetxController{
+class PersonDataController extends GetxController {
   var personData = PersonModel().obs;
   var personDataCumulatieve = PersonDataCumulatieveModel().obs;
   var personSummary = PersonProfileSummaryModel().obs;
+  var personDaywage = <PersonDaywageModel>[].obs;
   var isEditing = false.obs;
 
   //profile
@@ -61,31 +63,35 @@ class PersonDataController extends GetxController{
     return '';
   }
 
-  String getAvatar(){
-    if (avatarCreated.value == false){
-          avatarCreated.value = true;
-              Avatar avatar =   DiceBearBuilder.withRandomSeed(sprite: DiceBearSprite.bigSmile).build();
-              avatarPictureUri.value = avatar.svgUri.toString();
-        }
+  String getAvatar() {
+    if (avatarCreated.value == false) {
+      avatarCreated.value = true;
+      Avatar avatar = DiceBearBuilder.withRandomSeed(sprite: DiceBearSprite.bigSmile).build();
+      avatarPictureUri.value = avatar.svgUri.toString();
+    }
 
     return avatarPictureUri.value;
   }
 
-  void initEditControllers () {
+  void initEditControllers() {
     isEditing.value = false;
 
     //profile
     achternaamController.value.text = personData.value.significantAchternaam ?? '';
     voorvoegselController.value.text = personData.value.voorvoegsel ?? '';
     voorlettersController.value.text = personData.value.voorletter ?? '';
-    geboortedatumController.value.text = ToDateFormat( personData.value.geboortedatum) ;
-    nationaliteitController.value.text = personData.value.nationaliteit?? '';
+    geboortedatumController.value.text = ToDateFormat(personData.value.geboortedatum);
+    nationaliteitController.value.text = personData.value.nationaliteit ?? '';
     geslachtController.value.text = personData.value.geslacht ?? '';
 
-    if (personData.value.geslacht == 'Item1') gestachtSelectedIndex.value = 1;
-    else if (personData.value.geslacht == 'Item2') gestachtSelectedIndex.value = 2;
-    else if (personData.value.geslacht == 'Item9') gestachtSelectedIndex.value = 3;
-    else gestachtSelectedIndex.value = 0;
+    if (personData.value.geslacht == 'Item1')
+      gestachtSelectedIndex.value = 1;
+    else if (personData.value.geslacht == 'Item2')
+      gestachtSelectedIndex.value = 2;
+    else if (personData.value.geslacht == 'Item9')
+      gestachtSelectedIndex.value = 3;
+    else
+      gestachtSelectedIndex.value = 0;
 
     //binnenland
     streetController.value.text = personData.value.adresBinnenland?.str ?? '';
@@ -105,20 +111,19 @@ class PersonDataController extends GetxController{
     landcodeBuitenController.value.text = personData.value.adresBuitenland?.landCd ?? '';
   }
 
-  void updateProfiles () {
+  void updateProfiles() {
     isEditing.value = false;
 
     personData.value.significantAchternaam = achternaamController.value.text;
     personData.value.voorvoegsel = voorvoegselController.value.text;
     personData.value.voorletter = voorlettersController.value.text;
-    personData.value.geboortedatum = DateTime.parse( geboortedatumController.value.text);
+    personData.value.geboortedatum = DateTime.parse(geboortedatumController.value.text);
     personData.value.nationaliteit = nationaliteitController.value.text;
     personData.value.geslacht = geslachtController.value.text;
 
-    switch(gestachtSelectedIndex.value)
-    {
+    switch (gestachtSelectedIndex.value) {
       case 1:
-        personData.value.geslacht ='Item1';
+        personData.value.geslacht = 'Item1';
         break;
       case 2:
         personData.value.geslacht = 'Item2';
@@ -132,7 +137,7 @@ class PersonDataController extends GetxController{
     }
   }
 
-  void updateBinnenland(){
+  void updateBinnenland() {
     personData.value.adresBinnenland?.str = streetController.value.text;
     personData.value.adresBinnenland?.huisNr = houseNoController.value.text;
     personData.value.adresBinnenland?.huisNrToev = houseNoExtController.value.text;
@@ -141,9 +146,8 @@ class PersonDataController extends GetxController{
     personData.value.adresBinnenland?.woonpl = woonplaatsController.value.text;
   }
 
-  void updateBuitenland(){
-    if (personData.value.adresBuitenland == null)
-    {
+  void updateBuitenland() {
+    if (personData.value.adresBuitenland == null) {
       personData.value.adresBuitenland = AdresBuitenland();
     }
 
@@ -161,9 +165,9 @@ class PersonDataController extends GetxController{
     updateBinnenland();
     updateBuitenland();
 
-    var forUpsert   = PersonUpsertModel();
+    var forUpsert = PersonUpsertModel();
     //profile
-    forUpsert.id    = personData.value.id;
+    forUpsert.id = personData.value.id;
     forUpsert.sofiNr = personData.value.sofiNr;
     forUpsert.significantAchternaam = personData.value.significantAchternaam;
     forUpsert.voorvoegsel = personData.value.voorvoegsel;
@@ -198,7 +202,7 @@ class PersonDataController extends GetxController{
     return forUpsert;
   }
 
-  void applyProfileSummary()  {
+  void applyProfileSummary() {
     personSummary.value.werkgever = personData.value.werkgever?.first.klant;
     personSummary.value.werkgeverFiscaalNumber = personData.value.werkgever?.first.loonheffingsNr;
     personSummary.value.cumulatieveLnLbPh = personDataCumulatieve.value.lnLbPh;

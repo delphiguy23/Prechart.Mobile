@@ -7,6 +7,7 @@ import 'package:person_portal/view/about_view.dart';
 import 'package:person_portal/view/address_binnenland_view.dart';
 import 'package:person_portal/view/address_buitenland_view.dart';
 import 'package:person_portal/view/cumulatieves_view.dart';
+import 'package:person_portal/view/daywage_view.dart';
 import 'package:person_portal/view/help_view.dart';
 import 'package:person_portal/view/logout_view.dart';
 import 'package:person_portal/view/main_view.dart';
@@ -37,11 +38,10 @@ class HomePage extends GetView<MenuController> {
             },
           );
         }),
-
         mainScreen: Obx(() => getScreen()),
       );
 
-  Widget getScreen(){
+  Widget getScreen() {
     switch (controller.currentMenuItem.value) {
       case menu_items.MenuItems.about:
         return AboutPage();
@@ -59,6 +59,8 @@ class HomePage extends GetView<MenuController> {
         return BinnenlandPage();
       case menu_items.MenuItems.adresBuitenland:
         return BuitenlandPage();
+      case menu_items.MenuItems.daywage:
+        return DaywagePage();
       default:
         return MainPage();
     }

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
@@ -10,6 +11,7 @@ class BaseClient {
   //GET
   Future<dynamic> get(String baseUrl, String api, String? queryString, String? bearerToken) async {
     var uri = Uri.parse(baseUrl + api + (queryString ?? ''));
+
     try {
       var response = await http.get(uri, headers: headers(bearerToken)).timeout(Duration(seconds: TIME_OUT_DURATION));
       return _processResponse(response);
@@ -43,10 +45,6 @@ class BaseClient {
     } on UnAuthorizedException {
       throw UnAuthorizedException('UnAuthorized request', uri.toString());
     }
-
-    // on Exception {
-    //   throw FetchDataException('Error occured with code : ${uri.toString()}', uri.toString());
-    // }
   }
 
   //DELETE

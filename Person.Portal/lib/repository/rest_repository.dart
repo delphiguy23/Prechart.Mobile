@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer' as logdev;
+import 'dart:developer';
 
 import 'package:get/get.dart';
 import 'package:person_portal/controller/base_controller.dart';
@@ -11,6 +12,7 @@ import 'package:person_portal/controller/token_controller.dart';
 import 'package:person_portal/helper/dialog_helper.dart';
 import 'package:person_portal/model/login_model.dart';
 import 'package:person_portal/model/person_data_cumulatieve_model.dart';
+import 'package:person_portal/model/person_daywage_model.dart';
 import 'package:person_portal/model/person_model.dart';
 import 'package:person_portal/model/person_profile_model.dart';
 import 'package:person_portal/model/person_register_model.dart';
@@ -31,10 +33,8 @@ class RestRepository with BaseController {
       showLoading('Loading...');
 
       loginController.retriesAttempted.value++;
-      var endpoint = mongoController.endPointServers.value.firstWhere((endpoint) => endpoint.active! && endpoint.servers?.server == mongoController.selectedServer.value);
-
-      print(mongoController.selectedServer.value);
-      print(endpoint.servers?.server);
+      var endpoint = mongoController.endPointServers.value.firstWhere(
+          (endpoint) => endpoint.active! && endpoint.servers?.server == mongoController.selectedServer.value);
 
       var login =
           LoginModel(username: loginController.userName.value.text, password: loginController.passWord.value.text);
@@ -80,7 +80,8 @@ class RestRepository with BaseController {
         return;
       }
 
-      var endpoint = mongoController.endPointServers.value.firstWhere((endpoint) => endpoint.active! && endpoint.servers?.server == mongoController.selectedServer.value);
+      var endpoint = mongoController.endPointServers.value.firstWhere(
+          (endpoint) => endpoint.active! && endpoint.servers?.server == mongoController.selectedServer.value);
 
       var result = await BaseClient()
           .get(endpoint.servers?.person ?? '', '/platform/service/api/person/getprofile/', personId,
@@ -109,11 +110,10 @@ class RestRepository with BaseController {
   Future<bool> Register() async {
     try {
       if (await RefreshToken()) {
-        print('a');
         showLoading('Loading...');
 
-        var endpoint = mongoController.endPointServers.value.firstWhere((endpoint) => endpoint.active! && endpoint.servers?.server == mongoController.selectedServer.value);
-        print(endpoint.servers?.server);
+        var endpoint = mongoController.endPointServers.value.firstWhere(
+            (endpoint) => endpoint.active! && endpoint.servers?.server == mongoController.selectedServer.value);
 
         var register = PersonRegisterModel(
           firstName: profileController.profile.value.voorvoegsel ?? '',
@@ -126,16 +126,12 @@ class RestRepository with BaseController {
           roles: ['Employee'],
         );
 
-        logdev.log(tokenController.bearerToken.value);
-        print(json.encode(register));
-
         var result = await BaseClient()
             .post(endpoint.servers?.user ?? '', '/platform/service/api/users/register', register,
                 tokenController.bearerToken.value)
             .catchError(handleErrorSnackBar);
 
         if (result == null) {
-          print ('result is null');
           return false;
         }
 
@@ -163,7 +159,8 @@ class RestRepository with BaseController {
 
     try {
       if (!tokenController.isValidToken()) {
-        var endpoint = mongoController.endPointServers.value.firstWhere((endpoint) => endpoint.active! && endpoint.servers?.server == mongoController.selectedServer.value);
+        var endpoint = mongoController.endPointServers.value.firstWhere(
+            (endpoint) => endpoint.active! && endpoint.servers?.server == mongoController.selectedServer.value);
 
         var tokens = TokenModel(
           bearerToken: tokenController.bearerToken.value,
@@ -213,7 +210,8 @@ class RestRepository with BaseController {
           return;
         }
 
-        var endpoint = mongoController.endPointServers.value.firstWhere((endpoint) => endpoint.active! && endpoint.servers?.server == mongoController.selectedServer.value);
+        var endpoint = mongoController.endPointServers.value.firstWhere(
+            (endpoint) => endpoint.active! && endpoint.servers?.server == mongoController.selectedServer.value);
 
         var result = await BaseClient()
             .get(endpoint.servers?.person ?? '', '/platform/service/api/person/username/', username,
@@ -244,7 +242,7 @@ class RestRepository with BaseController {
       return;
     } catch (e) {
       hideLoading();
-      return;
+      rethrow;
     }
   }
 
@@ -259,7 +257,8 @@ class RestRepository with BaseController {
           return false;
         }
 
-        var endpoint = mongoController.endPointServers.value.firstWhere((endpoint) => endpoint.active! && endpoint.servers?.server == mongoController.selectedServer.value);
+        var endpoint = mongoController.endPointServers.value.firstWhere(
+            (endpoint) => endpoint.active! && endpoint.servers?.server == mongoController.selectedServer.value);
 
         var forUpsert = personDataController.prepareForUpdate();
 
@@ -294,11 +293,12 @@ class RestRepository with BaseController {
           return;
         }
 
-        var endpoint = mongoController.endPointServers.value.firstWhere((endpoint) => endpoint.active! && endpoint.servers?.server == mongoController.selectedServer.value);
+        var endpoint = mongoController.endPointServers.value.firstWhere(
+            (endpoint) => endpoint.active! && endpoint.servers?.server == mongoController.selectedServer.value);
 
         var result = await BaseClient()
-            .get(endpoint.servers?.person ?? '', '/platform/service/api/person/cumulative/', personDataController.personData.value.sofiNr,
-            tokenController.bearerToken.value)
+            .get(endpoint.servers?.person ?? '', '/platform/service/api/person/cumulative/',
+                personDataController.personData.value.sofiNr, tokenController.bearerToken.value)
             .catchError(handleError);
 
         if (result == null) {
@@ -315,6 +315,44 @@ class RestRepository with BaseController {
         hideLoading();
         return;
       }
+      hideLoading();
+      return;
+    } catch (e) {
+      hideLoading();
+      return;
+    }
+  }
+
+  FetchDaywage() async {
+    try {
+
+      if (await RefreshToken()) {
+        if (personDataController.personData.value.id == '' || personDataController.personSummary.value.werkgeverFiscaalNumber == '') {
+          hideLoading();
+          return;
+        }
+
+        var endpoint = mongoController.endPointServers.value.firstWhere(
+                (endpoint) => endpoint.active! && endpoint.servers?.server == mongoController.selectedServer.value);
+
+        log(tokenController.bearerToken.value);
+        var result = await BaseClient()
+            .get(endpoint.servers?.person ?? '', '/platform/service/api/daywage/',
+            (personDataController?.personData?.value?.id ?? '') + '/' + (personDataController?.personSummary?.value?.werkgeverFiscaalNumber ?? ''), tokenController.bearerToken.value)
+            .catchError(handleError);
+
+        if (result == null) {
+          hideLoading();
+          return;
+        }
+
+        var data = personDaywageModelFromJson(result);
+
+        if (data != null) {
+          personDataController.personDaywage.value = data;
+        }
+      }
+
       hideLoading();
       return;
     } catch (e) {

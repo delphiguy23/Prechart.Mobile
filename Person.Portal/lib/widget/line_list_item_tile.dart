@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-Widget LineListTile(String? title, String? text) {
+Widget LineListTile(String? title, String? text, [bool threeLine = true]) {
   return ListTile(
-    isThreeLine: true,
+    isThreeLine: threeLine,
     title: Text(title ?? ''),
     subtitle: Text(text ?? ''),
   );
