@@ -117,7 +117,7 @@ class PersonDataController extends GetxController {
     personData.value.significantAchternaam = achternaamController.value.text;
     personData.value.voorvoegsel = voorvoegselController.value.text;
     personData.value.voorletter = voorlettersController.value.text;
-    personData.value.geboortedatum = DateTime.parse(geboortedatumController.value.text);
+    personData.value.geboortedatum = DateTime.parse(geboortedatumController.value.text).toUtc();
     personData.value.nationaliteit = nationaliteitController.value.text;
     personData.value.geslacht = geslachtController.value.text;
 
@@ -172,7 +172,7 @@ class PersonDataController extends GetxController {
     forUpsert.significantAchternaam = personData.value.significantAchternaam;
     forUpsert.voorvoegsel = personData.value.voorvoegsel;
     forUpsert.voorletter = personData.value.voorletter;
-    forUpsert.geboortedatum = personData.value.geboortedatum;
+    forUpsert.geboortedatum = personData.value.geboortedatum?.toUtc();
     forUpsert.nationaliteit = personData.value.nationaliteit;
     forUpsert.geslacht = personData.value.geslacht;
     forUpsert.adresBinnenland = personData.value.adresBinnenland;

@@ -38,7 +38,7 @@ migrate_working_dir/
 /android/.gradlebuild/
 /build/ios/Debug-iphonesimulator/
 /build/ios/iphonesimulator/
-
+/build/*.cache.dill.track.dill
 
 # Symbolication related
 app.*.symbols

@@ -1,11 +1,17 @@
 import 'package:intl/intl.dart';
 
-String ToDateFormat(DateTime? dateTime) {
-  if (dateTime != null) {
-    return DateFormat("yyyy-MM-dd").format(dateTime);
-  } else {
+String ToDateFormat(DateTime? dateTime, [isUTC = true]) {
+  if (dateTime == null) {
     return '';
   }
+
+  DateTime date = dateTime;
+
+  if (isUTC) {
+    date = date.toLocal();
+  }
+
+  return DateFormat("yyyy-MM-dd").format(date);
 }
 
 String ToDateFormatNoDelimit(DateTime? dateTime) {
